@@ -158,16 +158,55 @@
       location.reload();
     },
 
-    // Save certification record for user
+    // Save certification record to central registry and user profile
     saveCertificate: function (certData) {
-      const user = getSession();
-      if (!user) return null;
-      const users = getAllUsers();
-      if (users[user.username]) {
-        users[user.username].cert = certData;
-        saveUsers(users);
-      }
+      if (!certData || !certData.certId) return null;
+      try {
+        const certs = JSON.parse(localStorage.getItem("gn_issued_certificates")) || {};
+        certs[certData.certId] = certData;
+        localStorage.setItem("gn_issued_certificates", JSON.stringify(certs));
+
+        const user = getSession();
+        if (user) {
+          const users = getAllUsers();
+          if (users[user.username]) {
+            users[user.username].cert = certData;
+            saveUsers(users);
+          }
+        }
+      } catch (e) {}
       return certData;
+    },
+
+    // Look up any certificate by its unique Certificate ID
+    getCertificateById: function (certId) {
+      if (!certId) return null;
+      certId = certId.trim().toUpperCase();
+
+      // Seed record for GN-2026-PENNZS
+      if (certId === "GN-2026-PENNZS") {
+        return {
+          certId: "GN-2026-PENNZS",
+          fullName: "Kalakonda Akshay",
+          username: "kalakonda-akshay",
+          score: 15,
+          pct: 100,
+          date: "2026-10-29",
+          issuer: "Kalaonda Akshay",
+          title: "Certificate of Git & GitHub Mastery",
+          tierBreakdown: "🌱 5/5 Foundations · ⚡ 5/5 Workflows · 🚀 5/5 Architecture",
+          verified: true
+        };
+      }
+
+      try {
+        const certs = JSON.parse(localStorage.getItem("gn_issued_certificates")) || {};
+        if (certs[certId]) return certs[certId];
+        for (const k in certs) {
+          if (k.toUpperCase() === certId) return certs[k];
+        }
+      } catch (e) {}
+      return null;
     },
 
     // Get certificate for current user
@@ -415,11 +454,20 @@
       const certLink = document.createElement("a");
       certLink.id = "nav-link-cert";
       certLink.href = "quiz.html";
-      certLink.innerHTML = "🎓 Exam &amp; Certificate";
+      certLink.innerHTML = "🎓 Exam";
       certLink.style.fontWeight = "700";
       certLink.style.color = "var(--ac)";
-      // Insert before auth container
       nav.insertBefore(certLink, authContainer);
+    }
+
+    // Add Verify link if not already present in nav
+    if (!document.getElementById("nav-link-verify")) {
+      const verifyLink = document.createElement("a");
+      verifyLink.id = "nav-link-verify";
+      verifyLink.href = "verify.html";
+      verifyLink.innerHTML = "🔍 Verify Cert";
+      verifyLink.style.fontWeight = "600";
+      nav.insertBefore(verifyLink, authContainer);
     }
 
     const user = window.GNAuth.getUser();

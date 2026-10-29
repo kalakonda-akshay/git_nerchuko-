@@ -5,61 +5,177 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Git &amp; GitHub Master Certification Exam – Git Nerchuko</title>
   <link rel="stylesheet" href="style.css">
+  <script src="qrcode.min.js"></script>
   <script src="sound.js"></script>
   <script src="shared.js"></script>
   <script src="auth.js"></script>
   <style>
     /* Certificate Printable Styles */
     @media print {
-      body * { visibility: hidden; }
-      #certificate-render-zone, #certificate-render-zone * { visibility: visible; }
+      body {
+        background: #fff !important;
+        color: #000 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      body * { visibility: hidden !important; }
+      #certificate-render-zone, #certificate-render-zone * { visibility: visible !important; }
       #certificate-render-zone {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        margin: 0;
-        padding: 0;
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
         box-shadow: none !important;
         border: none !important;
+        background: transparent !important;
+      }
+      .cert-frame {
+        box-shadow: none !important;
+        border-width: 10px !important;
+        margin: 0 auto !important;
+        max-width: 100% !important;
       }
       .no-print { display: none !important; }
+      @page {
+        size: landscape;
+        margin: 8mm;
+      }
+    }
+
+    .cert-container-wrap {
+      max-width: 980px;
+      margin: 0 auto;
     }
 
     .cert-frame {
-      background: radial-gradient(ellipse at 50% 30%, #fffdfa 0%, #fbf7ee 100%);
+      background: radial-gradient(circle at 50% 35%, #ffffff 0%, #fffdfa 45%, #fbf6ec 100%);
       color: #1a1714;
-      border: 12px double #b45309;
-      border-radius: 16px;
-      padding: 48px 42px;
+      border: 14px solid #b45309;
+      outline: 3.5px solid #fef3c7;
+      outline-offset: -7px;
+      border-radius: 18px;
+      padding: 44px 48px 36px;
       position: relative;
-      box-shadow: 0 25px 70px rgba(0,0,0,0.3), 0 0 30px rgba(180,83,9,0.15);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.45), 0 0 50px rgba(180,83,9,0.22);
       font-family: "Bricolage Grotesque", system-ui, sans-serif;
+      overflow: hidden;
     }
+
+    /* Outer Ornamental Border Inset */
     .cert-frame::before {
       content: "";
       position: absolute;
-      inset: 8px;
-      border: 1.5px solid rgba(180, 83, 9, 0.4);
+      inset: 12px;
+      border: 1.5px solid rgba(180, 83, 9, 0.45);
+      border-radius: 10px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Inner Hairline Frame */
+    .cert-frame::after {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      border: 1px dashed rgba(217, 119, 6, 0.35);
       border-radius: 8px;
       pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Corner Rosettes */
+    .cert-corner {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      color: #b45309;
+      font-size: 18px;
+      line-height: 1;
+      display: grid;
+      place-items: center;
+      z-index: 3;
+      user-select: none;
+    }
+    .cert-corner.tl { top: 18px; left: 18px; }
+    .cert-corner.tr { top: 18px; right: 18px; }
+    .cert-corner.bl { bottom: 18px; left: 18px; }
+    .cert-corner.br { bottom: 18px; right: 18px; }
+
+    /* Faint Git DAG Graph Watermark */
+    .cert-watermark {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.045;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* 3D Gold Ribbon Seal */
+    .cert-seal-wrap {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .cert-seal {
-      width: 90px;
-      height: 90px;
+      width: 96px;
+      height: 96px;
       border-radius: 50%;
-      background: radial-gradient(circle, #f59e0b 0%, #b45309 70%, #78350f 100%);
+      background: radial-gradient(circle at 35% 30%, #fef08a 0%, #f59e0b 35%, #b45309 75%, #78350f 100%);
       color: #fff;
       display: grid;
       place-items: center;
       text-align: center;
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 800;
-      letter-spacing: 0.05em;
-      box-shadow: 0 8px 20px rgba(180, 83, 9, 0.4);
-      border: 3px solid #fef3c7;
+      letter-spacing: 0.06em;
+      box-shadow: 0 10px 25px rgba(180, 83, 9, 0.45), inset 0 2px 4px rgba(255,255,255,0.7), inset 0 -3px 6px rgba(0,0,0,0.4);
+      border: 3.5px solid #fef3c7;
       text-transform: uppercase;
-      line-height: 1.2;
+      line-height: 1.25;
+      position: relative;
+      z-index: 3;
+    }
+    .cert-ribbon-tails {
+      position: absolute;
+      top: 76px;
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+    .cert-ribbon-left, .cert-ribbon-right {
+      width: 22px;
+      height: 36px;
+      background: linear-gradient(180deg, #b45309 0%, #78350f 100%);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .cert-ribbon-left {
+      transform: rotate(14deg);
+    }
+    .cert-ribbon-right {
+      transform: rotate(-14deg);
+    }
+
+    /* QR Code Box */
+    .cert-qr-container {
+      background: #ffffff;
+      padding: 6px;
+      border-radius: 10px;
+      border: 1.5px solid #d97706;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      display: inline-block;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .cert-qr-container:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(217,119,6,0.3);
     }
 
     /* Option button styling */
@@ -225,88 +341,142 @@
 
       <!-- Printable Certificate Zone -->
       <div id="certificate-render-zone" style="display:none">
-        <div class="cert-frame">
-          <div style="text-align:center;margin-bottom:24px">
-            <div style="font-size:12px;font-weight:800;letter-spacing:0.18em;color:#b45309;text-transform:uppercase;margin-bottom:6px">
-              ★ OFFICIAL ACCREDITATION OF TECHNICAL COMPETENCE ★
-            </div>
-            <h1 style="font-size:clamp(26px, 4vw, 38px);font-weight:900;letter-spacing:-0.02em;margin:0 0 6px;color:#1a1714">
-              CERTIFICATE OF GIT &amp; GITHUB MASTERY
-            </h1>
-            <div style="font-size:14px;color:#78350f;font-style:italic">
-              Issued under the authority of Git Nerchuko Version Control Engineering
-            </div>
-          </div>
+        <div class="cert-container-wrap">
+          <div class="cert-frame">
+            <!-- Corner Rosettes -->
+            <div class="cert-corner tl">❖</div>
+            <div class="cert-corner tr">❖</div>
+            <div class="cert-corner bl">❖</div>
+            <div class="cert-corner br">❖</div>
 
-          <div style="text-align:center;margin:32px 0 28px">
-            <div style="font-size:14px;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">This certifies that</div>
-            <div id="cert-recipient-name" style="font-size:clamp(32px, 5.5vw, 46px);font-weight:900;letter-spacing:-0.02em;color:#b45309;border-bottom:2.5px solid #d97706;display:inline-block;padding:0 32px 6px">
-              Kalaonda Akshay
+            <!-- Faint SVG Watermark of Git DAG -->
+            <div class="cert-watermark">
+              <svg width="680" height="340" viewBox="0 0 680 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 40 170 H 640" stroke="#b45309" stroke-width="4" stroke-dasharray="8 6"/>
+                <path d="M 120 170 C 180 170, 180 70, 240 70 H 380 C 440 70, 440 170, 500 170" stroke="#b45309" stroke-width="4"/>
+                <path d="M 200 170 C 260 170, 260 270, 320 270 H 420 C 480 270, 480 170, 540 170" stroke="#b45309" stroke-width="4"/>
+                <circle cx="50" cy="170" r="14" fill="#b45309"/>
+                <circle cx="120" cy="170" r="14" fill="#b45309"/>
+                <circle cx="200" cy="170" r="14" fill="#b45309"/>
+                <circle cx="240" cy="70" r="14" fill="#b45309"/>
+                <circle cx="380" cy="70" r="14" fill="#b45309"/>
+                <circle cx="320" cy="270" r="14" fill="#b45309"/>
+                <circle cx="420" cy="270" r="14" fill="#b45309"/>
+                <circle cx="500" cy="170" r="14" fill="#b45309"/>
+                <circle cx="540" cy="170" r="14" fill="#b45309"/>
+                <circle cx="630" cy="170" r="14" fill="#b45309"/>
+              </svg>
             </div>
-            <p style="max-width:620px;margin:20px auto 0;color:#374151;font-size:15px;line-height:1.6">
-              has successfully achieved mastery across all foundational and advanced Git architecture modules, passing the comprehensive <strong>15-Question Examination</strong> covering atomic commits, fast-forward merges, interactive rebasing, reflog recovery, and 3-way conflict resolution.
-            </p>
-          </div>
 
-          <!-- Score Breakdown Badges on Certificate -->
-          <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:36px">
-            <div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:6px 14px;border-radius:99px;font-size:12.5px;font-weight:700">
-              🌱 5/5 Foundations Passed
-            </div>
-            <div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:6px 14px;border-radius:99px;font-size:12.5px;font-weight:700">
-              ⚡ 5/5 Workflows Passed
-            </div>
-            <div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:6px 14px;border-radius:99px;font-size:12.5px;font-weight:700">
-              🚀 5/5 Architecture Passed
-            </div>
-            <div id="cert-score-pill" style="background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;padding:6px 14px;border-radius:99px;font-size:12.5px;font-weight:800">
-              Score: 100%
-            </div>
-          </div>
-
-          <!-- Bottom Signatures & Seal -->
-          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:24px;padding-top:20px;border-top:1.5px dashed rgba(180,83,9,0.3);flex-wrap:wrap;gap:20px">
-            <div>
-              <div style="font-family:'Courier New',monospace;font-size:12px;color:#6b7280;margin-bottom:4px">
-                CERTIFICATE ID: <strong id="cert-id-tag" style="color:#b45309">GN-2026-X892F1</strong>
+            <!-- Header Section -->
+            <div style="position:relative;z-index:2;text-align:center;margin-bottom:18px">
+              <div style="font-size:11.5px;font-weight:800;letter-spacing:0.22em;color:#b45309;text-transform:uppercase;margin-bottom:6px">
+                ★ OFFICIAL ACCREDITATION OF TECHNICAL COMPETENCE ★
               </div>
-              <div style="font-size:12.5px;color:#6b7280">
-                ISSUE DATE: <strong id="cert-date-tag">2026-10-29</strong>
-              </div>
-              <div style="font-size:11.5px;color:#9ca3af;margin-top:4px">
-                Verify authentic accreditation at gitnerchuko.dev/verify
+              <h1 style="font-size:clamp(26px, 3.8vw, 36px);font-weight:900;letter-spacing:-0.02em;margin:0 0 4px;color:#1a1714;text-transform:uppercase">
+                Certificate of Git &amp; GitHub Mastery
+              </h1>
+              <div style="font-size:13.5px;color:#78350f;font-style:italic;letter-spacing:0.02em">
+                Issued under the supreme authority of Git Nerchuko Version Control Engineering
               </div>
             </div>
 
-            <!-- 3D Gold Seal -->
-            <div class="cert-seal">
-              <span>GIT NERCHUKO<br>★ VERIFIED ★<br>MASTER</span>
-            </div>
-
-            <!-- Signature -->
-            <div style="text-align:right">
-              <div style="font-family:'Brush Script MT',cursive,sans-serif;font-size:26px;color:#b45309;line-height:1;margin-bottom:2px">
+            <!-- Recipient Showcase -->
+            <div style="position:relative;z-index:2;text-align:center;margin:22px 0 18px">
+              <div style="font-size:12.5px;color:#6b7280;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;font-weight:600">
+                This is to officially certify that
+              </div>
+              <div id="cert-recipient-name" style="font-size:clamp(30px, 4.8vw, 44px);font-weight:900;letter-spacing:-0.01em;color:#1e1b18;text-transform:uppercase;border-bottom:2.5px solid #d97706;display:inline-block;padding:0 28px 4px">
                 Kalaonda Akshay
               </div>
-              <div style="border-top:1.5px solid #1a1714;padding-top:4px;font-weight:800;font-size:13px">
-                Kalaonda Akshay
+              <p style="max-width:760px;margin:16px auto 0;color:#374151;font-size:14px;line-height:1.65">
+                has successfully achieved verified technical distinction across foundational, workflow, and advanced Git architectural principles, passing the comprehensive <strong>15-Question Technical Examination</strong> covering atomic commit trees, fast-forward branch joins, interactive history rebasing, reflog disaster recovery, and 3-way conflict resolution.
+              </p>
+            </div>
+
+            <!-- Score Breakdown Badges on Certificate -->
+            <div style="position:relative;z-index:2;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:24px">
+              <div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:5px 12px;border-radius:99px;font-size:12px;font-weight:700">
+                🌱 5/5 Foundations Passed
               </div>
-              <div style="font-size:11.5px;color:#6b7280">
-                Founder &amp; Lead Systems Architect
+              <div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:5px 12px;border-radius:99px;font-size:12px;font-weight:700">
+                ⚡ 5/5 Workflows Passed
+              </div>
+              <div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:5px 12px;border-radius:99px;font-size:12px;font-weight:700">
+                🚀 5/5 Architecture Passed
+              </div>
+              <div id="cert-score-pill" style="background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;padding:5px 14px;border-radius:99px;font-size:12px;font-weight:800">
+                Score: 100% · Distinction
+              </div>
+            </div>
+
+            <!-- Bottom Three-Column Verification & Seal Row -->
+            <div style="position:relative;z-index:2;display:grid;grid-template-columns:1.3fr 1fr 1.3fr;align-items:end;margin-top:14px;padding-top:16px;border-top:1.5px dashed rgba(180,83,9,0.35);gap:16px">
+              <!-- Left: Real Dynamic QR Code & ID -->
+              <div style="display:flex;align-items:center;gap:12px">
+                <a id="cert-qr-link" href="verify.html?id=GN-2026-PENNZS" target="_blank" title="Click to verify credential online" style="text-decoration:none;flex-shrink:0">
+                  <div id="cert-qr-box" class="cert-qr-container"></div>
+                </a>
+                <div style="font-size:12px;line-height:1.45">
+                  <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#92400e;font-weight:800;margin-bottom:2px">
+                    Scan / Click to Verify
+                  </div>
+                  <div style="font-family:'JetBrains Mono','Courier New',monospace;font-size:11.5px;color:#374151">
+                    ID: <strong id="cert-id-tag" style="color:#b45309">GN-2026-PENNZS</strong>
+                  </div>
+                  <div style="font-size:11.5px;color:#6b7280">
+                    ISSUED: <strong id="cert-date-tag">2026-10-29</strong>
+                  </div>
+                  <div style="margin-top:2px">
+                    <a id="cert-verify-link" href="verify.html?id=GN-2026-PENNZS" target="_blank" style="color:#b45309;font-weight:700;font-size:11px;text-decoration:underline">
+                      Verify Credential Online ↗
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Center: 3D Embossed Gold Seal with Ribbon Tails -->
+              <div style="display:flex;justify-content:center">
+                <div class="cert-seal-wrap">
+                  <div class="cert-seal">
+                    <span>GIT NERCHUKO<br>★ VERIFIED ★<br>MASTER</span>
+                  </div>
+                  <div class="cert-ribbon-tails">
+                    <div class="cert-ribbon-left"></div>
+                    <div class="cert-ribbon-right"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Formal Calligraphic Signature -->
+              <div style="text-align:right">
+                <div style="font-family:'Brush Script MT','Great Vibes',cursive,sans-serif;font-size:28px;color:#92400e;line-height:1;margin-bottom:2px">
+                  Kalaonda Akshay
+                </div>
+                <div style="border-top:1.5px solid #1a1714;padding-top:4px;font-weight:800;font-size:13px;color:#1a1714">
+                  Kalaonda Akshay
+                </div>
+                <div style="font-size:11px;color:#6b7280;line-height:1.3">
+                  Founder &amp; Lead Systems Architect<br>
+                  <span style="font-size:10px;color:#9ca3af">Git Nerchuko Technical Directorate</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Action Buttons -->
-        <div class="no-print" style="display:flex;justify-content:center;gap:14px;margin-top:28px;flex-wrap:wrap">
-          <button class="btn-3d" onclick="window.print()" style="padding:13px 30px;font-size:15.5px">
+        <div class="no-print" style="display:flex;justify-content:center;gap:12px;margin-top:24px;flex-wrap:wrap">
+          <button class="btn-3d" onclick="window.print()" style="padding:13px 28px;font-size:15px">
             🖨️ Print / Save as PDF
           </button>
-          <button class="btn outline" onclick="copyCertLink()" style="border-radius:12px;padding:12px 20px;font-weight:700">
+          <button class="btn outline" onclick="copyCertLink()" style="border-radius:12px;padding:12px 18px;font-weight:700">
             📋 Copy Verification Link
           </button>
-          <button class="btn outline" onclick="restartQuiz()" style="border-radius:12px;padding:12px 20px;font-weight:700">
+          <a id="btn-open-verifier" class="btn outline" href="verify.html" target="_blank" style="border-radius:12px;padding:12px 18px;font-weight:700;text-decoration:none">
+            🔍 Verify on Public Portal ↗
+          </a>
+          <button class="btn outline" onclick="restartQuiz()" style="border-radius:12px;padding:12px 18px;font-weight:700">
             🔁 Retake Exam
           </button>
         </div>
@@ -494,15 +664,45 @@
       const authText = document.getElementById("quiz-auth-text");
       const user = window.GNAuth.getUser();
       if (user) {
-        authText.innerHTML = `
-          ✅ <strong>Logged in as:</strong> <span style="color:#b45309;font-weight:800">${user.fullName}</span> (@${user.username})<br>
-          This exact name will be permanently engraved on your Certificate upon scoring &ge; 80% (12/15).
-        `;
+        const existingCert = window.GNAuth.getCertificate();
+        if (existingCert) {
+          authText.innerHTML = `
+            ✅ <strong>Logged in as:</strong> <span style="color:#b45309;font-weight:800">${user.fullName}</span> (@${user.username})<br>
+            🏆 <strong>Accreditation Earned:</strong> Certificate <strong style="color:#15803d">${existingCert.certId}</strong> is already issued to your profile.
+            <button class="btn sm" onclick="loadUserExistingCert('${existingCert.certId}')" style="margin-left:8px;padding:3px 12px;font-size:12px;background:#15803d;color:#fff;border-radius:6px">View Your Certificate 📜</button>
+          `;
+        } else {
+          authText.innerHTML = `
+            ✅ <strong>Logged in as:</strong> <span style="color:#b45309;font-weight:800">${user.fullName}</span> (@${user.username})<br>
+            This exact name will be permanently engraved on your Certificate upon scoring &ge; 80% (12/15).
+          `;
+        }
       } else {
         authText.innerHTML = `
           You are currently <strong>not logged in</strong>. You can take the exam right now, but you will need to enter your Full Name or sign in to generate and print your official verified Certificate.
           <button class="btn sm" onclick="window.openAuthModal('register')" style="margin-left:8px;padding:3px 10px;font-size:12px;background:var(--ac);color:#fff">Sign In Now</button>
         `;
+      }
+    }
+
+    function loadUserExistingCert(certId) {
+      const cert = window.GNAuth.getCertificateById(certId);
+      if (cert) {
+        document.getElementById("quiz-intro-stage").style.display = "none";
+        document.getElementById("quiz-runner-stage").style.display = "none";
+        document.getElementById("quiz-result-stage").style.display = "block";
+        document.getElementById("result-summary-card").innerHTML = `
+          <div style="text-align:center;padding:12px">
+            <div style="font-size:36px;margin-bottom:6px">📜 ✨</div>
+            <h2 style="font-size:26px;font-weight:800;margin:0 0 6px;color:#15803d">
+              Welcome back, ${cert.fullName}!
+            </h2>
+            <p style="font-size:14.5px;color:var(--mut);max-width:540px;margin:0 auto">
+              Your official verified Certificate (${cert.certId}) is displayed below.
+            </p>
+          </div>
+        `;
+        renderOfficialCertificate(cert.fullName, cert.score || 15, cert.pct || 100, cert.certId, cert.date || "2026-10-29");
       }
     }
 
@@ -705,29 +905,75 @@
       }
     }
 
-    function renderOfficialCertificate(fullName, sc, pct) {
+    let currentCertId = "GN-2026-PENNZS";
+
+    function renderOfficialCertificate(fullName, sc, pct, forcedId, forcedDate) {
       const certZone = document.getElementById("certificate-render-zone");
       const nameEl = document.getElementById("cert-recipient-name");
       const scorePill = document.getElementById("cert-score-pill");
       const idTag = document.getElementById("cert-id-tag");
       const dateTag = document.getElementById("cert-date-tag");
+      const qrBox = document.getElementById("cert-qr-box");
+      const qrLink = document.getElementById("cert-qr-link");
+      const verifyLink = document.getElementById("cert-verify-link");
+      const verifierBtn = document.getElementById("btn-open-verifier");
 
-      const randomId = "GN-2026-" + Math.random().toString(36).substring(2, 8).toUpperCase();
-      const today = new Date().toISOString().split("T")[0];
+      const certId = forcedId || ("GN-2026-" + Math.random().toString(36).substring(2, 8).toUpperCase());
+      const today = forcedDate || new Date().toISOString().split("T")[0];
+      currentCertId = certId;
 
       nameEl.textContent = fullName;
-      scorePill.textContent = `Score: ${sc}/15 (${pct}%)`;
-      idTag.textContent = randomId;
+      scorePill.textContent = `Score: ${sc}/15 (${pct}% · Distinction)`;
+      idTag.textContent = certId;
       dateTag.textContent = today;
 
-      // Save to user profile in GNAuth
-      window.GNAuth.saveCertificate({
-        certId: randomId,
+      // Construct absolute verification URL for QR code & sharing
+      const currentOrigin = (window.location.origin && window.location.origin !== "null") ? window.location.origin : "https://kalakonda-akshay.github.io/git_nerchuko-";
+      const pathname = window.location.pathname.includes("quiz.html") 
+        ? window.location.pathname.replace("quiz.html", "verify.html") 
+        : (window.location.pathname.endsWith("/") ? window.location.pathname + "verify.html" : window.location.pathname + "/verify.html");
+      const verifyUrl = `${currentOrigin}${pathname}?id=${certId}`;
+
+      if (qrLink) qrLink.href = `verify.html?id=${certId}`;
+      if (verifyLink) {
+        verifyLink.href = `verify.html?id=${certId}`;
+      }
+      if (verifierBtn) {
+        verifierBtn.href = `verify.html?id=${certId}`;
+      }
+
+      // Generate dynamic QR code
+      if (qrBox) {
+        qrBox.innerHTML = "";
+        try {
+          if (typeof QRCode !== "undefined") {
+            new QRCode(qrBox, {
+              text: verifyUrl,
+              width: 82,
+              height: 82,
+              colorDark: "#1a1714",
+              colorLight: "#ffffff",
+              correctLevel: QRCode.CorrectLevel.M
+            });
+          }
+        } catch (e) {
+          console.warn("QRCode generation failed:", e);
+        }
+      }
+
+      // Save to centralized certification store in GNAuth
+      const certRecord = {
+        certId: certId,
         fullName: fullName,
+        username: (window.GNAuth.getUser() || {}).username || "student",
         score: sc,
         pct: pct,
-        date: today
-      });
+        date: today,
+        issuer: "Kalaonda Akshay",
+        title: "Certificate of Git & GitHub Mastery",
+        verified: true
+      };
+      window.GNAuth.saveCertificate(certRecord);
 
       certZone.style.display = "block";
       certZone.scrollIntoView({ behavior: "smooth" });
@@ -735,15 +981,56 @@
 
     function restartQuiz() {
       document.getElementById("quiz-result-stage").style.display = "none";
+      document.getElementById("certificate-render-zone").style.display = "none";
       document.getElementById("quiz-intro-stage").style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function copyCertLink() {
-      const id = document.getElementById("cert-id-tag").textContent;
-      navigator.clipboard.writeText(location.origin + "/quiz.html?cert=" + id).then(() => {
-        alert("Certificate verification link copied to clipboard!");
-      });
+      const id = document.getElementById("cert-id-tag").textContent || currentCertId;
+      const currentOrigin = (window.location.origin && window.location.origin !== "null") ? window.location.origin : "https://kalakonda-akshay.github.io/git_nerchuko-";
+      const pathname = window.location.pathname.includes("quiz.html") 
+        ? window.location.pathname.replace("quiz.html", "verify.html") 
+        : (window.location.pathname.endsWith("/") ? window.location.pathname + "verify.html" : window.location.pathname + "/verify.html");
+      const verifyUrl = `${currentOrigin}${pathname}?id=${id}`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(verifyUrl).then(() => {
+          alert("✓ Certificate Verification Link copied to clipboard:\n" + verifyUrl);
+        }).catch(() => {
+          prompt("Copy this Certificate Verification Link:", verifyUrl);
+        });
+      } else {
+        prompt("Copy this Certificate Verification Link:", verifyUrl);
+      }
     }
+
+    // Auto-check for cert query parameter on initial page load
+    window.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryCert = urlParams.get("cert") || urlParams.get("id");
+      if (queryCert) {
+        const cert = window.GNAuth.getCertificateById(queryCert);
+        if (cert) {
+          document.getElementById("quiz-intro-stage").style.display = "none";
+          document.getElementById("quiz-runner-stage").style.display = "none";
+          const resStage = document.getElementById("quiz-result-stage");
+          resStage.style.display = "block";
+          document.getElementById("result-summary-card").innerHTML = `
+            <div style="text-align:center;padding:12px">
+              <div style="font-size:36px;margin-bottom:6px">📜 ✨</div>
+              <h2 style="font-size:26px;font-weight:800;margin:0 0 6px;color:#15803d">
+                Verified Accreditation Record: ${cert.certId}
+              </h2>
+              <p style="font-size:14.5px;color:var(--mut);max-width:540px;margin:0 auto">
+                This credential was officially issued to <strong>${cert.fullName}</strong> on ${cert.date || "2026-10-29"}.
+              </p>
+            </div>
+          `;
+          renderOfficialCertificate(cert.fullName, cert.score || 15, cert.pct || 100, cert.certId, cert.date || "2026-10-29");
+        }
+      }
+    });
   </script>
 </body>
 </html>
