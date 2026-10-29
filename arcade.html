@@ -1,0 +1,17 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="style.css"><script src="sound.js"></script><script src="shared.js"></script><script src="auth.js"></script><title>Arcade – Git Nerchuko</title></head><body><nav><a class="logo" href="index.html">git<b>nerchuko</b></a><a href="play.html">Playground</a><a href="arcade.html" class="active">Arcade</a><a href="quiz.html">🎓 Exam</a><a href="install.html">Install Git</a><a href="faq.html">FAQ</a><a href="leaderboard.html">Leaderboard</a><a href="shop.html">Shop</a></nav><main><h1>Command Match</h1><p>Type the command that matches. 45 seconds. Press Enter.</p>
+<div class="card"><b id=q>Press Start</b></div><input id=i autocomplete=off disabled aria-label="Command"><p><button class="btn-3d" id=s style="padding:8px 18px;font-size:14px">Start</button> Score: <b id=sc>0</b> Time: <b id=t>45</b> Best: <b id=b></b></p>
+<script>const Q=[["Start a repository","git init"],["Stage everything","git add ."],["See what changed","git status"],["Show short history","git log --oneline"],["Create and switch to branch dev","git switch -c dev"],["Merge dev into current branch","git merge dev"],["Undo last commit with a new commit","git revert HEAD"],["Shelve unfinished work","git stash"],["Restore shelved work","git stash pop"],["Download and merge remote work","git pull"],["Open a pull request","gh pr create"],["Drop last commit completely","git reset --hard HEAD~1"]];
+let c,sc=0,t=45,iv;b.textContent=localStorage.getItem("gqa")||0;
+function n(){c=Q[Math.random()*Q.length|0];q.textContent=c[0]}
+s.onclick=()=>{if(window.playGQSound)playGQSound("cmd");sc=0;t=45;sc_.textContent=0;i.disabled=false;i.value="";i.focus();n();clearInterval(iv);iv=setInterval(()=>{t--;tt.textContent=t;if(t<=0){clearInterval(iv);i.disabled=true;q.textContent="Time up! Score "+sc;if(window.playGQSound)playGQSound("win");if(sc>+(localStorage.getItem("gqa")||0)){localStorage.setItem("gqa",sc);b.textContent=sc}}},1e3)};
+const sc_=document.getElementById("sc"),tt=document.getElementById("t");
+i.onkeydown=e=>{if(e.key==="Enter"){if(i.value.trim()===c[1]){sc++;sc_.textContent=sc;if(window.playGQSound)playGQSound("success")}else{if(window.playGQSound)playGQSound("error")}i.value="";n()}else if(e.key.length===1&&window.playGQSound){playGQSound("key")}}</script></main>
+<footer style="max-width:960px;margin:40px auto 20px;padding:24px 16px;border-top:1px solid var(--ln);color:var(--mut);font-size:13px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+  <div><b>gitnerchuko</b> © 2026 Kalaonda Akshay. All rights reserved.</div>
+  <div style="display:flex;gap:14px;font-weight:600">
+    <a href="play.html" style="color:inherit;text-decoration:none">Playground</a>
+    <a href="shop.html" style="color:inherit;text-decoration:none">Shop</a>
+    <a href="faq.html" style="color:inherit;text-decoration:none">FAQ</a>
+  </div>
+</footer>
+</body></html>

@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script src="sound.js"></script>
+  <script src="shared.js"></script>
+  <script src="auth.js"></script>
+  <title>Git Nerchuko – Learn Git and GitHub by Playing</title>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="index.html">git<b>nerchuko</b></a>
+    <a href="play.html">Playground</a>
+    <a href="arcade.html">Arcade</a>
+    <a href="quiz.html">🎓 Exam &amp; Certificate</a>
+    <a href="install.html">Install Git</a>
+    <a href="faq.html">FAQ</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="shop.html">Shop</a>
+    <div style="margin-left:auto;display:flex;gap:10px;align-items:center">
+      <button class="btn sm outline" id="th-btn" onclick="toggleSiteTheme()" style="border-radius:8px">🌓 Theme</button>
+      <a class="btn-3d" href="play.html" style="padding:7px 16px;font-size:13px;text-decoration:none">Play Now 🚀</a>
+    </div>
+  </nav>
+
+  <main style="max-width:1100px;padding:32px 22px 70px">
+    <!-- Hero Section -->
+    <div class="hero-grid">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(232,89,12,0.12);border:1px solid rgba(232,89,12,0.3);color:var(--ac);padding:5px 14px;border-radius:99px;font-size:12.5px;font-weight:700;margin-bottom:16px">
+          <span class="pulse-dot"></span> 100% Interactive · Zero Setup Simulator
+        </div>
+        
+        <h1 style="font-size: clamp(38px, 5.2vw, 56px); font-weight: 800; line-height: 1.08; letter-spacing: -0.03em; margin: 0 0 16px">
+          Master Git &amp; GitHub.<br>
+          <span class="gradient-text">By Actually Playing.</span>
+        </h1>
+
+        <p style="color:var(--mut);font-size:17px;line-height:1.6;margin:0 0 24px;max-width:540px">
+          Stop memorizing static cheat sheets. Learn branches, fast-forwards, pull requests, and time travel inside an interactive visual simulator with real-time feedback.
+        </p>
+
+        <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:28px">
+          <a class="btn-3d" href="play.html" style="text-decoration:none;font-size:16px;padding:13px 28px">
+            Start Learning 🚀
+          </a>
+          <a class="btn outline" href="quiz.html" style="border-radius:12px;padding:12px 22px;font-weight:700;text-decoration:none">
+            Take 15-Q Exam 🎓
+          </a>
+        </div>
+
+        <div class="stat-pills">
+          <div class="stat-pill">🌱 3 Difficulty Tiers</div>
+          <div class="stat-pill">🌳 Live DAG Graph</div>
+          <div class="stat-pill">⚡ 15-Q Certification</div>
+          <div class="stat-pill">🎮 45s Arcade Mode</div>
+        </div>
+      </div>
+
+      <!-- 3D Interactive Hero Preview Card -->
+      <div class="hero-window tilt-card">
+        <div class="window-bar">
+          <span class="window-dot dot-red"></span>
+          <span class="window-dot dot-yellow"></span>
+          <span class="window-dot dot-green"></span>
+          <span class="window-title">gitnerchuko-simulator v1.2</span>
+        </div>
+
+        <!-- Animated Mini SVG Commit Graph -->
+        <div style="background:#0e1017;padding:16px;border-bottom:1px solid #24283b;display:flex;justify-content:center">
+          <svg width="340" height="110" viewBox="0 0 340 110" role="img" aria-label="Interactive commit graph preview">
+            <!-- Commit lines -->
+            <path d="M 40 40 L 110 40 L 180 40 L 250 40 L 300 40" stroke="#e8590c" stroke-width="3.5" fill="none" />
+            <path d="M 110 40 C 140 40, 140 85, 180 85 L 240 85 C 270 85, 270 40, 300 40" stroke="#1c7ed6" stroke-width="3" fill="none" />
+            
+            <!-- Nodes -->
+            <circle cx="40" cy="40" r="8" fill="#e8590c" stroke="#121420" stroke-width="3" />
+            <text x="40" y="24" font-size="9.5" fill="#8b93a5" text-anchor="middle" font-family="JetBrains Mono, monospace">init</text>
+            
+            <circle cx="110" cy="40" r="8" fill="#e8590c" stroke="#121420" stroke-width="3" />
+            <text x="110" y="24" font-size="9.5" fill="#8b93a5" text-anchor="middle" font-family="JetBrains Mono, monospace">feat-1</text>
+            
+            <circle cx="180" cy="85" r="7.5" fill="#1c7ed6" stroke="#121420" stroke-width="3" />
+            <rect x="150" y="96" width="60" height="15" rx="7" fill="#1c7ed6" />
+            <text x="180" y="107" font-size="9" fill="#fff" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700">feature</text>
+            
+            <circle cx="250" cy="40" r="8" fill="#e8590c" stroke="#121420" stroke-width="3" />
+            <circle cx="300" cy="40" r="9" fill="#2b8a3e" stroke="#121420" stroke-width="3" />
+            <rect x="272" y="10" width="56" height="16" rx="8" fill="#2b8a3e" />
+            <text x="300" y="22" font-size="9.5" fill="#fff" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700">HEAD</text>
+          </svg>
+        </div>
+
+        <!-- Live Interactive Mini Terminal -->
+        <div style="background:#090b10;padding:14px 16px;font:12.5px/1.55 'JetBrains Mono',monospace;color:#d7dde8">
+          <div style="color:#74c0fc">$ git switch -c feature</div>
+          <div style="color:#8ce99a">Switched to a new branch 'feature'</div>
+          <div style="color:#74c0fc;margin-top:4px">$ git commit -m "add auth flow"</div>
+          <div>[feature a4f91c2] add auth flow</div>
+          <div id="hero-out" style="color:#8ce99a;margin-top:4px">✓ 1 file changed, 24 insertions(+)</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:8px;border-top:1px solid #1f2333;padding-top:8px">
+            <span style="color:#8ce99a">$</span>
+            <input id="hero-in" value="git status" style="flex:1;background:none;border:0;color:inherit;font:inherit;outline:0" aria-label="Hero terminal interactive input" placeholder="try 'git status' or 'git branch'">
+            <button class="btn sm" onclick="runHeroCmd(document.getElementById('hero-in').value.trim())" style="padding:2px 8px;font-size:11px">Run</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. Interactive 3D Difficulty Showcase matching User Reference -->
+    <div style="margin-top:75px">
+      <div style="text-align:center;margin-bottom:32px">
+        <div style="color:var(--ac);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">ADAPTIVE CURRICULUM</div>
+        <h2 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;margin:0 0 8px">Choose Your Difficulty Level</h2>
+        <p style="color:var(--mut);font-size:16px;max-width:560px;margin:0 auto">Select a tier to match your experience. You can switch difficulty anytime without losing your saved progress.</p>
+      </div>
+
+      <div class="gq-diff-grid">
+        <!-- Beginner Card -->
+        <div class="gq-diff-card selected" id="tier-card-beginner" onclick="selectTier('beginner')">
+          <div>
+            <div class="gq-diff-header">
+              <span class="gq-diff-icon">🌱</span>
+              <span class="gq-diff-radio" id="tier-radio-beginner">✓</span>
+            </div>
+            <div class="gq-diff-title">Beginner</div>
+            <div class="gq-diff-desc">Learn Git basics from scratch</div>
+            <div class="gq-diff-topics-label">Topics covered:</div>
+            <div class="gq-diff-pills">
+              <span class="gq-diff-pill">Introduction to Git</span>
+              <span class="gq-diff-pill">File Operations</span>
+              <span class="gq-diff-pill">Working with Branches</span>
+              <span class="gq-diff-pill">Remote Repositories</span>
+            </div>
+          </div>
+          <div class="gq-diff-footer">
+            <span>Max Points:</span>
+            <b>180 XP</b>
+          </div>
+        </div>
+
+        <!-- Advanced Card -->
+        <div class="gq-diff-card" id="tier-card-advanced" onclick="selectTier('advanced')">
+          <div>
+            <div class="gq-diff-header">
+              <span class="gq-diff-icon">⚡</span>
+              <span class="gq-diff-radio" id="tier-radio-advanced"></span>
+            </div>
+            <div class="gq-diff-title">Advanced</div>
+            <div class="gq-diff-desc">Master advanced Git workflows</div>
+            <div class="gq-diff-topics-label">Topics covered:</div>
+            <div class="gq-diff-pills">
+              <span class="gq-diff-pill">Merging Branches</span>
+              <span class="gq-diff-pill">Git Workflows</span>
+              <span class="gq-diff-pill">Team Collaboration</span>
+              <span class="gq-diff-pill">Undoing Commits</span>
+              <span class="gq-diff-pill">Git Stash</span>
+            </div>
+          </div>
+          <div class="gq-diff-footer">
+            <span>Max Points:</span>
+            <b>200 XP</b>
+          </div>
+        </div>
+
+        <!-- Pro Card -->
+        <div class="gq-diff-card" id="tier-card-pro" onclick="selectTier('pro')">
+          <div>
+            <div class="gq-diff-header">
+              <span class="gq-diff-icon">🚀</span>
+              <span class="gq-diff-radio" id="tier-radio-pro"></span>
+            </div>
+            <div class="gq-diff-title">Pro (Blind Mode)</div>
+            <div class="gq-diff-desc">Expert Git techniques &amp; DAG challenges</div>
+            <div class="gq-diff-topics-label">Topics covered:</div>
+            <div class="gq-diff-pills">
+              <span class="gq-diff-pill">Rebasing</span>
+              <span class="gq-diff-pill">Advanced Git Techniques</span>
+              <span class="gq-diff-pill">Git Archaeology</span>
+              <span class="gq-diff-pill">Git Mastery</span>
+            </div>
+          </div>
+          <div class="gq-diff-footer">
+            <span>Max Points:</span>
+            <b>270 XP (1.5x)</b>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center;margin-top:20px">
+        <a class="btn-3d" id="tier-launch-btn" href="play.html" style="font-size:16px;padding:14px 34px;text-decoration:none">
+          Start Learning Beginner 🌱
+        </a>
+      </div>
+    </div>
+
+    <!-- NEW SECTION 2: HOW GIT WORKS UNDER THE HOOD (THE 4 STORAGE ZONES) -->
+    <div style="margin-top:75px">
+      <div style="text-align:center;margin-bottom:32px">
+        <div style="color:var(--ac);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">INTERNAL ARCHITECTURE</div>
+        <h2 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;margin:0 0 8px">How Git Actually Works Under The Hood</h2>
+        <p style="color:var(--mut);font-size:16px;max-width:580px;margin:0 auto">Git is not magic—it is a content-addressable filesystem. Learn how data moves across the 4 fundamental storage zones.</p>
+      </div>
+
+      <!-- 4 Zones Interactive Grid -->
+      <div class="arch-grid">
+        <div class="arch-card" id="arch-zone-1">
+          <div>
+            <span class="arch-num">ZONE 01</span>
+            <h3>Working Tree</h3>
+            <p>Your actual files on disk. Edits made in your editor start here as unversioned or dirty modifications before Git tracks them.</p>
+          </div>
+          <div class="arch-badge">📁 Files on disk (Untracked)</div>
+        </div>
+
+        <div class="arch-card" id="arch-zone-2">
+          <div>
+            <span class="arch-num">ZONE 02</span>
+            <h3>Staging Area (Index)</h3>
+            <p>The pre-commit cache located at <code>.git/index</code>. It captures the exact snapshot of files intended for your next commit.</p>
+          </div>
+          <div class="arch-badge">📋 .git/index (Prepared snapshot)</div>
+        </div>
+
+        <div class="arch-card" id="arch-zone-3">
+          <div>
+            <span class="arch-num">ZONE 03</span>
+            <h3>Local Repository</h3>
+            <p>The immutable object store (Blobs, Trees, Commits) stored in <code>.git/objects</code>. HEAD points to your current branch commit node.</p>
+          </div>
+          <div class="arch-badge">🗄️ .git/objects (Commit DAG)</div>
+        </div>
+
+        <div class="arch-card" id="arch-zone-4">
+          <div>
+            <span class="arch-num">ZONE 04</span>
+            <h3>Remote Repository</h3>
+            <p>The shared cloud repository (e.g. GitHub). Tracks upstream branches like <code>origin/main</code> to keep distributed teams in sync.</p>
+          </div>
+          <div class="arch-badge">☁️ GitHub (origin/main)</div>
+        </div>
+      </div>
+
+      <!-- Interactive Command Flow Simulator -->
+      <div class="card" style="padding:20px;border-radius:16px;background:var(--pn);border:1.5px solid var(--ln);text-align:center">
+        <div style="font-size:13.5px;font-weight:700;margin-bottom:12px;color:var(--mut)">
+          Click a command to trace its directional flow across zones:
+        </div>
+        <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+          <button class="btn sm" onclick="traceFlow('add')" id="flow-btn-add">git add .</button>
+          <button class="btn sm outline" onclick="traceFlow('commit')" id="flow-btn-commit">git commit -m</button>
+          <button class="btn sm outline" onclick="traceFlow('push')" id="flow-btn-push">git push origin</button>
+          <button class="btn sm outline" onclick="traceFlow('pull')" id="flow-btn-pull">git pull</button>
+          <button class="btn sm outline" onclick="traceFlow('restore')" id="flow-btn-restore">git restore / checkout</button>
+        </div>
+        <div id="flow-explanation" style="font:600 13px 'JetBrains Mono',monospace;color:var(--ac);min-height:20px">
+          ➔ git add .: Copies modified files from Working Tree into the Staging Index (.git/index).
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Curriculum Roadmap -->
+    <div style="margin-top:75px">
+      <div style="text-align:center;margin-bottom:32px">
+        <div style="color:var(--ac);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">STRUCTURED LEARNING PATH</div>
+        <h2 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;margin:0 0 8px">From First Commit to Open-Source Contributor</h2>
+        <p style="color:var(--mut);font-size:16px;max-width:540px;margin:0 auto">A progressive four-phase progression tested by thousands of engineers.</p>
+      </div>
+
+      <div class="roadmap-container">
+        <div class="roadmap-step tilt-card">
+          <div>
+            <div class="roadmap-num">01</div>
+            <h3 style="font-size:18px;margin:0 0 6px">Foundations</h3>
+            <p style="color:var(--mut);font-size:13.5px;margin:0 0 14px">Initialize repos, understand the 3 stages (working dir, staging index, commit tree), and inspect history.</p>
+          </div>
+          <div style="font:600 12px 'JetBrains Mono',monospace;color:var(--ac)">init · add · status · commit · log</div>
+        </div>
+
+        <div class="roadmap-step tilt-card">
+          <div>
+            <div class="roadmap-num">02</div>
+            <h3 style="font-size:18px;margin:0 0 6px">Branching &amp; Flow</h3>
+            <p style="color:var(--mut);font-size:13.5px;margin:0 0 14px">Create lightweight pointers, switch HEAD, create parallel features, and merge with clean fast-forwards.</p>
+          </div>
+          <div style="font:600 12px 'JetBrains Mono',monospace;color:var(--ac)">branch · switch · merge · checkout</div>
+        </div>
+
+        <div class="roadmap-step tilt-card">
+          <div>
+            <div class="roadmap-num">03</div>
+            <h3 style="font-size:18px;margin:0 0 6px">Merges &amp; Undos</h3>
+            <p style="color:var(--mut);font-size:13.5px;margin:0 0 14px">Resolve 3-way conflicts, safely revert erroneous commits, shelve experimental work with stash, and rebase.</p>
+          </div>
+          <div style="font:600 12px 'JetBrains Mono',monospace;color:var(--ac)">revert · reset · stash · rebase</div>
+        </div>
+
+        <div class="roadmap-step tilt-card">
+          <div>
+            <div class="roadmap-num">04</div>
+            <h3 style="font-size:18px;margin:0 0 6px">GitHub Sync</h3>
+            <p style="color:var(--mut);font-size:13.5px;margin:0 0 14px">Link remote origins, push branch tracking, fetch upstream commits, and open pull requests using <code>gh</code>.</p>
+          </div>
+          <div style="font:600 12px 'JetBrains Mono',monospace;color:var(--ac)">remote · push · pull · gh pr create</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Interactive Conflict & Merge Studio -->
+    <div style="margin-top:75px">
+      <div class="grid-2" style="align-items:center;gap:36px">
+        <div>
+          <div style="color:var(--ac);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">REALISTIC SIMULATION</div>
+          <h2 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;margin:0 0 14px">Interactive Conflict Resolution Studio</h2>
+          <p style="color:var(--mut);font-size:15px;line-height:1.6;margin:0 0 18px">
+            Merge conflicts are where developers get intimidated. Git Nerchuko takes the mystery away with visual 3-way diffs and interactive resolution markers right inside the browser.
+          </p>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:10px;align-items:center">
+              <span style="color:var(--ok);font-size:18px">✓</span>
+              <span style="font-size:14.5px;font-weight:600">Standard conflict markers: &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD vs &gt;&gt;&gt;&gt;&gt;&gt;&gt;</span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <span style="color:var(--ok);font-size:18px">✓</span>
+              <span style="font-size:14.5px;font-weight:600">Interactive resolution buttons: Accept Current, Incoming, or Both</span>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <span style="color:var(--ok);font-size:18px">✓</span>
+              <span style="font-size:14.5px;font-weight:600">Ort merge strategy with fast-forward auto-detection</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Conflict Studio Preview -->
+        <div class="conflict-studio tilt-card">
+          <div class="conflict-bar">
+            <span>src/config.js (MERGE CONFLICT)</span>
+            <div style="display:flex;gap:6px">
+              <button class="conflict-btn" onclick="resolveConflict('head')">Accept HEAD</button>
+              <button class="conflict-btn" onclick="resolveConflict('incoming')">Accept Incoming</button>
+              <button class="conflict-btn" onclick="resolveConflict('both')">Accept Both</button>
+            </div>
+          </div>
+          <div id="conflict-content" style="padding:14px 0">
+            <div class="conflict-sec-head">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (main branch)</div>
+            <div class="conflict-sec-curr">&nbsp;&nbsp;const API_ENDPOINT = "https://api.gitnerchuko.dev/v1";</div>
+            <div class="conflict-sec-div">=======</div>
+            <div class="conflict-sec-inc">&nbsp;&nbsp;const API_ENDPOINT = "https://api.gitnerchuko.dev/v2-ultra";</div>
+            <div class="conflict-sec-foot">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/v2-upgrade</div>
+          </div>
+          <div id="conflict-status" style="background:#090a10;padding:8px 16px;border-top:1px solid #282c44;font-size:11.5px;color:#8ce99a;display:flex;align-items:center;gap:6px">
+            <span class="pulse-dot"></span> Conflict unresolved: click an option above to test resolution
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW SECTION 5: GIT EMERGENCY DECISION MATRIX -->
+    <div style="margin-top:75px">
+      <div style="text-align:center;margin-bottom:32px">
+        <div style="color:var(--ac);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">QUICK PROBLEM SOLVER</div>
+        <h2 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;margin:0 0 8px">Git Emergency Decision Matrix</h2>
+        <p style="color:var(--mut);font-size:16px;max-width:560px;margin:0 auto">Stuck in a tough Git scenario? Click any real-world problem below to inspect the exact commands and rescue strategy.</p>
+      </div>
+
+      <div class="matrix-grid">
+        <!-- Case 1 -->
+        <div class="matrix-card tilt-card" onclick="toggleMatrix(this)">
+          <div>
+            <span class="matrix-tag" style="background:#fef3c7;color:#b45309">⚠️ Wrong Branch</span>
+            <h3 style="font-size:16px;font-weight:800;margin:0 0 6px">I committed to the wrong branch!</h3>
+            <p style="font-size:13px;color:var(--mut);margin:0">Undo the commit without losing changes, switch to the right branch, and commit there.</p>
+          </div>
+          <div class="matrix-cmd">git reset --soft HEAD~1&#10;git switch -c correct-branch&#10;git commit -m "fix feature"</div>
+        </div>
+
+        <!-- Case 2 -->
+        <div class="matrix-card tilt-card" onclick="toggleMatrix(this)">
+          <div>
+            <span class="matrix-tag" style="background:#dbeafe;color:#1e40af">🧹 Clean History</span>
+            <h3 style="font-size:16px;font-weight:800;margin:0 0 6px">Squash 3 messy commits into 1</h3>
+            <p style="font-size:13px;color:var(--mut);margin:0">Combine multiple WIP commits into one polished atomic commit before opening a Pull Request.</p>
+          </div>
+          <div class="matrix-cmd">git rebase -i HEAD~3&#10;# Mark line 2 &amp; 3 as 'squash' (or 's')</div>
+        </div>
+
+        <!-- Case 3 -->
+        <div class="matrix-card tilt-card" onclick="toggleMatrix(this)">
+          <div>
+            <span class="matrix-tag" style="background:#fee2e2;color:#991b1b">🗑️ Deleted Branch</span>
+            <h3 style="font-size:16px;font-weight:800;margin:0 0 6px">Accidentally deleted a branch!</h3>
+            <p style="font-size:13px;color:var(--mut);margin:0">Git never deletes commits immediately. Find the lost commit SHA in reflog and restore it.</p>
+          </div>
+          <div class="matrix-cmd">git reflog&#10;git switch -c recovered-branch &lt;SHA&gt;</div>
+        </div>
+
+        <!-- Case 4 -->
+        <div class="matrix-card tilt-card" onclick="toggleMatrix(this)">
+          <div>
+            <span class="matrix-tag" style="background:#fae8ff;color:#86198f">🛑 Safe Public Undo</span>
+            <h3 style="font-size:16px;font-weight:800;margin:0 0 6px">Undo a commit pushed to GitHub</h3>
+            <p style="font-size:13px;color:var(--mut);margin:0">Avoid force pushing to shared branches. Revert safely by appending an inverse rollback commit.</p>
+          </div>
+          <div class="matrix-cmd">git revert HEAD&#10;git push origin main</div>
+        </div>
+
+        <!-- Case 5 -->
+        <div class="matrix-card tilt-card" onclick="toggleMatrix(this)">
+          <div>
+            <span class="matrix-tag" style="background:#ecfdf5;color:#065f46">📦 Unfinished Edits</span>
+            <h3 style="font-size:16px;font-weight:800;margin:0 0 6px">Need to switch branches urgently</h3>
+            <p style="font-size:13px;color:var(--mut);margin:0">Shelve your uncommitted work temporarily without losing progress, fix the hotfix, and pop back.</p>
+          </div>
+          <div class="matrix-cmd">git stash&#10;git switch main # do work&#10;git switch - # return &amp; git stash pop</div>
+        </div>
+
+        <!-- Case 6 -->
+        <div class="matrix-card tilt-card" onclick="toggleMatrix(this)">
+          <div>
+            <span class="matrix-tag" style="background:#fef9c3;color:#854d0e">🎯 Surgical Commit</span>
+            <h3 style="font-size:16px;font-weight:800;margin:0 0 6px">Grab one commit from another branch</h3>
+            <p style="font-size:13px;color:var(--mut);margin:0">Apply an isolated bugfix without merging the rest of an unstable experimental branch.</p>
+          </div>
+          <div class="matrix-cmd">git cherry-pick &lt;commit-hash&gt;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Retro CRT & Cyberpunk Terminal Themes Switcher -->
+    <div style="margin-top:75px">
+      <div style="text-align:center;margin-bottom:28px">
+        <div style="color:var(--ac);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">RETRO CRT &amp; CYBERPUNK CUSTOMIZATION</div>
+        <h2 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;margin:0 0 8px">Unlockable Terminal Aesthetics</h2>
+        <p style="color:var(--mut);font-size:16px;max-width:560px;margin:0 auto">Earn XP in missions and spend it in the Shop. Click a theme below to test drive the live terminal look:</p>
+      </div>
+
+      <!-- Live Theme Tabs -->
+      <div style="display:flex;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+        <button class="btn sm" id="tb-classic" onclick="previewTheme('default')" style="border-radius:20px">Classic Slate</button>
+        <button class="btn sm outline" id="tb-dark" onclick="previewTheme('dark')" style="border-radius:20px">Obsidian Dark</button>
+        <button class="btn sm outline" id="tb-matrix" onclick="previewTheme('matrix')" style="border-radius:20px;color:#00ff66;border-color:rgba(0,255,102,0.4)">Matrix Phosphor 🟢</button>
+        <button class="btn sm outline" id="tb-golden" onclick="previewTheme('golden')" style="border-radius:20px;color:#ffc83b;border-color:rgba(255,200,59,0.4)">Golden Amber 🟡</button>
+      </div>
+
+      <!-- Live Themed Preview Terminal Box -->
+      <div class="card tilt-card" id="theme-demo-box" style="max-width:760px;margin:0 auto;background:#14171c;color:#d7dde8;border-color:#2a2f39;border-radius:16px;padding:22px;font:13px/1.65 'JetBrains Mono',monospace;box-shadow:0 20px 50px rgba(0,0,0,0.3);transition:all .25s ease">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;border-bottom:1px solid currentColor;opacity:.3;padding-bottom:10px">
+          <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:currentColor"></span>
+          <span style="font-size:11.5px;letter-spacing:0.04em" id="demo-theme-title">THEME: CLASSIC SLATE (DEFAULT)</span>
+        </div>
+        <div><span id="demo-prompt-1" style="color:#8ce99a">$</span> git status</div>
+        <div style="opacity:.85">On branch feature/auth-flow</div>
+        <div style="opacity:.85">Changes to be committed:</div>
+        <div id="demo-k-1" style="color:#8ce99a">&nbsp;&nbsp;&nbsp;modified: &nbsp;src/auth/provider.js</div>
+        <div style="margin-top:8px"><span id="demo-prompt-2" style="color:#8ce99a">$</span> git commit -m "feat: OAuth2 token refresh"</div>
+        <div>[feature/auth-flow 7a19c4e] feat: OAuth2 token refresh</div>
+        <div id="demo-k-2" style="color:#8ce99a">1 file changed, 18 insertions(+), 3 deletions(-)</div>
+      </div>
+    </div>
+
+    <!-- NEW SECTION 7: 15-QUESTION ACCREDITATION & CERTIFICATE PROOF -->
+    <div style="margin-top:75px">
+      <div class="card tilt-card" style="padding:36px;border-radius:24px;background:linear-gradient(135deg, rgba(234,179,8,0.06), rgba(232,89,12,0.06));border:2px solid rgba(234,179,8,0.3);box-shadow:0 25px 60px rgba(234,179,8,0.1)">
+        <div class="grid-2" style="align-items:center;gap:36px">
+          <div>
+            <div style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#b45309,#d97706);color:#fff;font-size:11.5px;font-weight:800;letter-spacing:0.06em;padding:4px 12px;border-radius:99px;margin-bottom:12px">
+              🎓 OFFICIAL CERTIFICATION EXAM
+            </div>
+            <h2 style="font-size:clamp(26px, 3.5vw, 36px);font-weight:900;letter-spacing:-0.02em;margin:0 0 12px">
+              Prove Your Version Control Competence
+            </h2>
+            <p style="color:var(--mut);font-size:15.5px;line-height:1.6;margin:0 0 20px">
+              Take the comprehensive 15-question exam covering Repository Foundations, Staging Mechanics, Fast-Forwards, 3-Way Merges, Interactive Rebasing, and Reflog Recovery.
+            </p>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px">
+              <div style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600">
+                <span style="color:#eab308">✓</span>
+                <span><strong>15 Rigorous Questions</strong> (5 Easy 🌱, 5 Medium ⚡, 5 Hard 🚀)</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600">
+                <span style="color:#eab308">✓</span>
+                <span><strong>80% (12/15) Passing Score</strong> required to issue credential</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600">
+                <span style="color:#eab308">✓</span>
+                <span><strong>Personalized Accreditation</strong> with your full legal name &amp; signed by <strong>Kalaonda Akshay</strong></span>
+              </div>
+            </div>
+            <a class="btn-3d" href="quiz.html" style="text-decoration:none;font-size:15px;padding:12px 28px">
+              Start 15-Question Exam 🚀
+            </a>
+          </div>
+
+          <!-- Mini Certificate Visual Preview -->
+          <div style="background:#fffdfa;color:#1a1714;border:5px double #b45309;border-radius:12px;padding:24px 20px;text-align:center;box-shadow:0 15px 35px rgba(0,0,0,0.15);position:relative">
+            <div style="font-size:9.5px;letter-spacing:0.12em;font-weight:800;color:#b45309;text-transform:uppercase">GIT NERCHUKO ACCREDITATION</div>
+            <div style="font-size:16px;font-weight:900;margin:6px 0 2px">CERTIFICATE OF MASTERY</div>
+            <div style="font-size:11px;color:#78350f;margin-bottom:14px">Version Control Engineering</div>
+            <div style="font-size:12px;color:#6b7280">Awarded To:</div>
+            <div style="font-size:18px;font-weight:900;color:#b45309;border-bottom:1.5px solid #d97706;display:inline-block;padding:2px 14px;margin-bottom:10px">
+              [Your Full Name]
+            </div>
+            <div style="font-size:11px;color:#4b5563;line-height:1.4;margin-bottom:14px">
+              For mastering atomic commits, branch isolation, rebasing, and conflict resolution.
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:9px;color:#9ca3af;border-top:1px dashed #d97706;padding-top:8px">
+              <span>VERIFIED: GN-2026-XXXXXX</span>
+              <span style="color:#b45309;font-weight:800">★ GOLD SEAL ★</span>
+              <span>KALAONDA AKSHAY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW SECTION 8: GIT MENTAL MODEL GLOSSARY -->
+    <div style="margin-top:75px">
+      <div style="text-align:center;margin-bottom:32px">
+        <div style="color:var(--ac);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">KEY TERMINOLOGY</div>
+        <h2 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;margin:0 0 8px">The Git Mental Model Glossary</h2>
+        <p style="color:var(--mut);font-size:16px;max-width:540px;margin:0 auto">Clear, authoritative definitions of the concepts every senior software engineer relies on.</p>
+      </div>
+
+      <div class="glossary-grid">
+        <div class="glossary-card">
+          <div class="glossary-term">📍 HEAD Pointer</div>
+          <p class="glossary-def">A symbolic reference inside <code>.git/HEAD</code> pointing to the currently checked-out branch or commit. Moving HEAD changes what files are shown in your working directory.</p>
+        </div>
+
+        <div class="glossary-card">
+          <div class="glossary-term">⚡ Fast-Forward</div>
+          <p class="glossary-def">A merge where the target branch has no divergent commits. Git simply slides the branch pointer forward to the latest commit without generating a merge commit.</p>
+        </div>
+
+        <div class="glossary-card">
+          <div class="glossary-term">👻 Detached HEAD</div>
+          <p class="glossary-def">Occurs when you checkout an exact commit SHA instead of a branch. Edits made here are not bound to any branch and can be lost if you switch away without creating one.</p>
+        </div>
+
+        <div class="glossary-card">
+          <div class="glossary-term">📜 Git Reflog</div>
+          <p class="glossary-def">A chronological local journal that records every single time HEAD moved (commits, checkouts, resets, rebases). It is Git’s safety net to recover lost work.</p>
+        </div>
+
+        <div class="glossary-card">
+          <div class="glossary-term">🔀 3-Way Ort Merge</div>
+          <p class="glossary-def">The default merge engine in Git. It finds the Common Ancestor (Merge Base) of two branches and reconciles divergent edits cleanly or flags conflict markers.</p>
+        </div>
+
+        <div class="glossary-card">
+          <div class="glossary-term">📦 Interactive Rebase</div>
+          <p class="glossary-def">Replays a sequence of commits onto a new base tip. Lets you rewrite commit messages, squash tiny WIP edits, reorder commits, or drop experiments before PR review.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. Interactive "Why Git Nerchuko" Comparison Table -->
+    <div style="margin-top:75px">
+      <div style="text-align:center;margin-bottom:30px">
+        <div style="color:var(--ac);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">THE SMARTEST WAY TO LEARN</div>
+        <h2 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;margin:0 0 8px">Why Developers Choose Git Nerchuko</h2>
+        <p style="color:var(--mut);font-size:16px;max-width:540px;margin:0 auto">See how active simulation beats passive reading and video tutorials.</p>
+      </div>
+
+      <div style="overflow-x:auto">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th style="width:36%">Learning Feature</th>
+              <th class="highlight" style="width:26%;color:var(--ac)">🚀 Git Nerchuko</th>
+              <th style="width:19%;color:var(--mut)">Video Tutorials</th>
+              <th style="width:19%;color:var(--mut)">Static Docs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Live Interactive Sandbox</b><br><small style="color:var(--mut)">Type real commands with safety</small></td>
+              <td class="highlight"><span style="color:var(--ok)">✓ Real terminal engine</span></td>
+              <td style="color:var(--mut)">❌ Passive watching</td>
+              <td style="color:var(--mut)">❌ Reading only</td>
+            </tr>
+            <tr>
+              <td><b>Real-Time SVG Commit Graph</b><br><small style="color:var(--mut)">Visual branch divergence &amp; merges</small></td>
+              <td class="highlight"><span style="color:var(--ok)">✓ Instant visual DAG</span></td>
+              <td style="color:var(--mut)">❌ Slide decks only</td>
+              <td style="color:var(--mut)">❌ ASCII diagrams</td>
+            </tr>
+            <tr>
+              <td><b>Pro Blind Terminal Challenge</b><br><small style="color:var(--mut)">Hide graph to build real mastery</small></td>
+              <td class="highlight"><span style="color:var(--ok)">✓ Blind Mode + 1.5x XP</span></td>
+              <td style="color:var(--mut)">❌ None</td>
+              <td style="color:var(--mut)">❌ None</td>
+            </tr>
+            <tr>
+              <td><b>Zero Install / Runs Anywhere</b><br><small style="color:var(--mut)">Instant load, offline capable</small></td>
+              <td class="highlight"><span style="color:var(--ok)">✓ 100% Client-side</span></td>
+              <td style="color:var(--mut)">❌ Needs streaming</td>
+              <td style="color:var(--mut)">⚠️ Manual setup</td>
+            </tr>
+            <tr>
+              <td><b>Gamified XP &amp; Retro Themes</b><br><small style="color:var(--mut)">Matrix, Obsidian, Golden CRT</small></td>
+              <td class="highlight"><span style="color:var(--ok)">✓ Unlocks &amp; Sound FX</span></td>
+              <td style="color:var(--mut)">❌ None</td>
+              <td style="color:var(--mut)">❌ None</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 10. Interactive FAQ Accordion -->
+    <div style="margin-top:75px">
+      <div style="text-align:center;margin-bottom:30px">
+        <div style="color:var(--ac);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">FREQUENTLY ASKED QUESTIONS</div>
+        <h2 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;margin:0 0 8px">Got Questions? We’ve Got Answers.</h2>
+        <p style="color:var(--mut);font-size:16px;max-width:540px;margin:0 auto">Everything you need to know about Git Nerchuko and its simulation engine.</p>
+      </div>
+
+      <div style="max-width:760px;margin:0 auto">
+        <div class="faq-accordion open">
+          <div class="faq-header" onclick="toggleFaq(this)">
+            <span>Is Git Nerchuko running real Git on my machine?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">
+            No! Git Nerchuko runs a lightweight, ultra-fast client-side simulator written in pure JavaScript. It behaves exactly like real Git (staging index, detached HEAD, DAG commit trees, fast-forward and 3-way ort merges) in a 100% safe sandbox where you cannot break anything.
+          </div>
+        </div>
+
+        <div class="faq-accordion">
+          <div class="faq-header" onclick="toggleFaq(this)">
+            <span>How do the 3 difficulty levels work?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">
+            <strong>Beginner</strong> provides guided inline hints and forgiving star thresholds.<br>
+            <strong>Advanced</strong> implements real-world rules with on-demand hints (-1★ deduction).<br>
+            <strong>Pro (Blind Mode)</strong> hides the visual commit graph completely! You must inspect history and branches solely through <code>git log</code> and <code>git status</code>, earning a 1.5x XP multiplier.
+          </div>
+        </div>
+
+        <div class="faq-accordion">
+          <div class="faq-header" onclick="toggleFaq(this)">
+            <span>How does the 15-Question Certification Exam work?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">
+            The exam tests 5 Easy, 5 Medium, and 5 Hard real-world Git challenges. Scoring <strong>80% (12/15)</strong> awards an official, verifiable Certificate of Competence permanently engraved with your full legal name, signed by <strong>Kalaonda Akshay</strong>.
+          </div>
+        </div>
+
+        <div class="faq-accordion">
+          <div class="faq-header" onclick="toggleFaq(this)">
+            <span>Where is my progress and XP stored?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">
+            All your mission progress, completed stars, earned XP, equipped terminal themes, user accounts, and certificates are safely persisted in your browser’s <code>localStorage</code>. No external server tracking required.
+          </div>
+        </div>
+
+        <div class="faq-accordion">
+          <div class="faq-header" onclick="toggleFaq(this)">
+            <span>Can I customize the terminal appearance?</span>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">
+            Yes! Visit the <strong>XP Shop</strong> to unlock custom CRT aesthetics including <em>Obsidian Dark</em>, <em>Matrix Phosphor Green</em>, and vintage <em>Golden Amber</em>, plus tactile synthesized audio feedback.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. Mega 3D Developer CTA Banner -->
+    <div class="card tilt-card" style="margin-top:75px;padding:48px 32px;text-align:center;background:radial-gradient(circle at 50% 0%, rgba(232,89,12,0.18) 0%, var(--pn) 80%);border:2px solid var(--ac);border-radius:24px;box-shadow:0 25px 60px rgba(232,89,12,0.15)">
+      <div style="display:inline-block;background:var(--ac);color:#fff;font-size:12px;font-weight:800;padding:4px 14px;border-radius:99px;margin-bottom:14px;letter-spacing:0.04em">
+        READY TO LEVEL UP?
+      </div>
+      <h2 style="font-size: clamp(28px, 4.5vw, 42px);margin:0 0 10px;font-weight:800;letter-spacing:-0.02em">
+        Start Your Git Journey Right Now
+      </h2>
+      <p style="color:var(--mut);font-size:16px;max-width:560px;margin:0 auto 28px;line-height:1.6">
+        No installation, no terminal configuration, no account required. Complete your first mission in under 60 seconds.
+      </p>
+      <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap">
+        <a class="btn-3d" href="play.html" style="font-size:16px;padding:14px 34px;text-decoration:none">
+          Launch Playground Free 🚀
+        </a>
+        <a class="btn outline" href="quiz.html" style="border-radius:12px;padding:13px 24px;font-weight:700;text-decoration:none">
+          Take Certification Exam 🎓
+        </a>
+      </div>
+      <div style="margin-top:24px;color:var(--mut);font-size:13px;display:flex;justify-content:center;align-items:center;gap:8px">
+        <span class="pulse-dot"></span> <span>Git Nerchuko Engine: 100% Operational · v1.2</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scrolling Lime-Green 3D Ticker Tape at bottom matching user reference -->
+  <div class="gq-ticker-wrap">
+    <div class="gq-ticker-move">
+      <span>★ GIT COMMIT -M &nbsp;★&nbsp; GIT SWITCH -C &nbsp;★&nbsp; GIT MERGE &nbsp;★&nbsp; GIT REBASE -I &nbsp;★&nbsp; GIT CHERRY-PICK &nbsp;★&nbsp; GIT STASH POP &nbsp;★&nbsp; GIT RESET --HARD &nbsp;★&nbsp; GIT PUSH -U ORIGIN MAIN &nbsp;★&nbsp; GH PR CREATE &nbsp;★&nbsp; GIT LOG --ONELINE &nbsp;★&nbsp; GIT STATUS &nbsp;★&nbsp; GIT REVERT HEAD &nbsp;★&nbsp;</span>
+      <span>★ GIT COMMIT -M &nbsp;★&nbsp; GIT SWITCH -C &nbsp;★&nbsp; GIT MERGE &nbsp;★&nbsp; GIT REBASE -I &nbsp;★&nbsp; GIT CHERRY-PICK &nbsp;★&nbsp; GIT STASH POP &nbsp;★&nbsp; GIT RESET --HARD &nbsp;★&nbsp; GIT PUSH -U ORIGIN MAIN &nbsp;★&nbsp; GH PR CREATE &nbsp;★&nbsp; GIT LOG --ONELINE &nbsp;★&nbsp; GIT STATUS &nbsp;★&nbsp; GIT REVERT HEAD &nbsp;★&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- Peak Modern Developer Footer -->
+  <div class="gq-footer-wrap">
+    <footer class="gq-footer">
+      <div class="footer-grid">
+        <!-- Col 1: Brand & Creator -->
+        <div class="footer-col">
+          <a class="logo" href="index.html" style="text-decoration:none;color:inherit">git<b>nerchuko</b></a>
+          <p style="color:var(--mut);font-size:13.5px;line-height:1.6;margin:12px 0 14px">
+            The definitive interactive, zero-build Git &amp; GitHub learning engine. Master atomic commits, branch isolation, and time-travel rollbacks right in your browser.
+          </p>
+          <div class="creator-badge">
+            <span>🧡 Crafted with passion by</span>
+            <strong>Kalaonda Akshay</strong>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--mut)">
+            <span class="pulse-dot"></span> <span>100% Client-Side Engine · Instant Sandbox</span>
+          </div>
+        </div>
+
+        <!-- Col 2: Simulator -->
+        <div class="footer-col">
+          <h4>Simulator</h4>
+          <ul>
+            <li><a href="play.html">🌱 Beginner Path (180 XP)</a></li>
+            <li><a href="play.html">⚡ Advanced Merges (200 XP)</a></li>
+            <li><a href="play.html">🚀 Pro Blind Mode (270 XP)</a></li>
+            <li><a href="quiz.html">🎓 15-Q Certification Exam</a></li>
+            <li><a href="arcade.html">🎮 45s Speed Arcade</a></li>
+            <li><a href="shop.html">💎 XP Shop &amp; CRT Themes</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Workflows -->
+        <div class="footer-col">
+          <h4>Git Workflows</h4>
+          <ul>
+            <li><a href="play.html">Branching &amp; Fast-Forwards</a></li>
+            <li><a href="play.html">Resolving Merge Conflicts</a></li>
+            <li><a href="play.html">Interactive Rebase &amp; Squash</a></li>
+            <li><a href="play.html">Time Travel with Git Reflog</a></li>
+            <li><a href="play.html">GitHub Pull Requests &amp; Reviews</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Resources -->
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="install.html">Install Git on Windows/Mac</a></li>
+            <li><a href="faq.html">Frequently Asked Questions</a></li>
+            <li><a href="leaderboard.html">Local &amp; Shared Leaderboard</a></li>
+            <li><a href="login.html">Sign In / Register Account</a></li>
+            <li><a href="javascript:void(0)" onclick="resetAllProgress()">Reset Progress (Debug)</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          <b>gitnerchuko</b> © 2026 Kalaonda Akshay. All rights reserved.
+        </div>
+        <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+          <span>Pure Static HTML/CSS/JS · Zero Build</span>
+          <span>•</span>
+          <span>Designed with Bricolage Grotesque &amp; JetBrains Mono</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    function toggleSiteTheme() {
+      const d = document.documentElement;
+      const dk = getComputedStyle(d).getPropertyValue("--bg").trim() === "#101216";
+      const next = dk ? "light" : "dark";
+      d.dataset.theme = next;
+      try { localStorage.setItem("gq_site_theme", next); } catch(e){}
+      if (window.playGQSound) playGQSound("key");
+    }
+
+    function toggleFaq(header) {
+      const acc = header.parentElement;
+      const isOpen = acc.classList.contains("open");
+      document.querySelectorAll(".faq-accordion").forEach(a => a.classList.remove("open"));
+      if (!isOpen) acc.classList.add("open");
+      if (window.playGQSound) playGQSound("key");
+    }
+
+    // Interactive Architecture Flow Tracer
+    const flowDescriptions = {
+      add: "➔ git add .: Copies uncommitted file changes from Working Tree (Zone 1) into the Staging Area Index (Zone 2).",
+      commit: "➔ git commit -m: Wraps the staged files into an immutable commit object in the Local Repository DAG (Zone 3).",
+      push: "➔ git push origin: Sends local commit objects to the Remote GitHub Repository (Zone 4) and advances origin/main.",
+      pull: "➔ git pull: Fetches upstream commits from Remote (Zone 4) and merges them into your Working Tree (Zone 1).",
+      restore: "➔ git restore / checkout: Discards unstaged edits in Working Tree (Zone 1) using clean copies from Staging or HEAD."
+    };
+
+    function traceFlow(flowKey) {
+      if (window.playGQSound) playGQSound("cmd");
+      const expl = document.getElementById("flow-explanation");
+      expl.textContent = flowDescriptions[flowKey];
+
+      // Highlight corresponding buttons
+      ["add", "commit", "push", "pull", "restore"].forEach(k => {
+        const btn = document.getElementById("flow-btn-" + k);
+        if (btn) btn.className = (k === flowKey) ? "btn sm" : "btn sm outline";
+      });
+
+      // Highlight active zones
+      for (let i = 1; i <= 4; i++) {
+        const z = document.getElementById("arch-zone-" + i);
+        if (z) {
+          z.style.borderColor = "var(--ln)";
+          z.style.boxShadow = "none";
+        }
+      }
+
+      if (flowKey === "add") {
+        highlightZone(1); highlightZone(2);
+      } else if (flowKey === "commit") {
+        highlightZone(2); highlightZone(3);
+      } else if (flowKey === "push") {
+        highlightZone(3); highlightZone(4);
+      } else if (flowKey === "pull") {
+        highlightZone(4); highlightZone(1);
+      } else if (flowKey === "restore") {
+        highlightZone(3); highlightZone(1);
+      }
+    }
+
+    function highlightZone(num) {
+      const z = document.getElementById("arch-zone-" + num);
+      if (z) {
+        z.style.borderColor = "var(--ac)";
+        z.style.boxShadow = "0 0 25px rgba(232,89,12,0.2)";
+      }
+    }
+
+    // Toggle Matrix card
+    function toggleMatrix(card) {
+      if (window.playGQSound) playGQSound("key");
+      const cmd = card.querySelector(".matrix-cmd");
+      if (cmd) {
+        cmd.style.borderColor = "var(--ac)";
+        setTimeout(() => cmd.style.borderColor = "#282e44", 600);
+      }
+    }
+
+    // Interactive Difficulty Tier Selector on Landing Page
+    let selectedLandingTier = "beginner";
+    function selectTier(tier) {
+      if (window.playGQSound) playGQSound("cmd");
+      selectedLandingTier = tier;
+      ["beginner", "advanced", "pro"].forEach(t => {
+        const card = document.getElementById("tier-card-" + t);
+        const radio = document.getElementById("tier-radio-" + t);
+        if (t === tier) {
+          card.classList.add("selected");
+          radio.textContent = "✓";
+        } else {
+          card.classList.remove("selected");
+          radio.textContent = "";
+        }
+      });
+      const btn = document.getElementById("tier-launch-btn");
+      if (btn) {
+        const labels = {
+          beginner: "Start Learning Beginner 🌱",
+          advanced: "Launch Advanced Workflows ⚡",
+          pro: "Enter Pro Blind Mode 🚀"
+        };
+        btn.textContent = labels[tier];
+      }
+      try {
+        localStorage.setItem("gq_difficulty", tier);
+      } catch(e){}
+    }
+
+    // Interactive Conflict Studio Resolver
+    function resolveConflict(choice) {
+      const content = document.getElementById("conflict-content");
+      const status = document.getElementById("conflict-status");
+      if (window.playGQSound) playGQSound("success");
+      
+      if (choice === "head") {
+        content.innerHTML = `<div style="padding:16px;color:#93c5fd;background:rgba(59,130,246,0.1)">
+          <div style="color:#60a5fa;font-weight:700;margin-bottom:6px">✓ Kept HEAD (Current Change):</div>
+          &nbsp;&nbsp;const API_ENDPOINT = "https://api.gitnerchuko.dev/v1";
+        </div>`;
+        status.innerHTML = `<span style="color:#8ce99a">✓ Conflict resolved! Preserved current stable API v1. Ready for 'git add'.</span>`;
+      } else if (choice === "incoming") {
+        content.innerHTML = `<div style="padding:16px;color:#86efac;background:rgba(34,197,94,0.1)">
+          <div style="color:#4ade80;font-weight:700;margin-bottom:6px">✓ Kept Incoming (feature/v2-upgrade):</div>
+          &nbsp;&nbsp;const API_ENDPOINT = "https://api.gitnerchuko.dev/v2-ultra";
+        </div>`;
+        status.innerHTML = `<span style="color:#8ce99a">✓ Conflict resolved! Upgraded to API v2-ultra. Ready for 'git commit'.</span>`;
+      } else if (choice === "both") {
+        content.innerHTML = `<div style="padding:16px;color:#e2e8f0;background:rgba(148,163,184,0.1)">
+          <div style="color:#facc15;font-weight:700;margin-bottom:6px">✓ Combined Both Versions:</div>
+          &nbsp;&nbsp;const API_ENDPOINT_V1 = "https://api.gitnerchuko.dev/v1";<br>
+          &nbsp;&nbsp;const API_ENDPOINT_V2 = "https://api.gitnerchuko.dev/v2-ultra";
+        </div>`;
+        status.innerHTML = `<span style="color:#8ce99a">✓ Both endpoints preserved with multi-version fallback!</span>`;
+      }
+    }
+
+    // Live Theme Switcher in Landing Section
+    const themeConfigs = {
+      default: { title: "THEME: CLASSIC SLATE (DEFAULT)", bg: "#14171c", color: "#d7dde8", prompt: "#8ce99a", border: "#2a2f39", glow: "none" },
+      dark: { title: "THEME: OBSIDIAN DARK", bg: "#08090c", color: "#f0f3f8", prompt: "#60a5fa", border: "#242933", glow: "none" },
+      matrix: { title: "THEME: MATRIX PHOSPHOR (GREEN CRT)", bg: "#040d06", color: "#00ff66", prompt: "#00ff66", border: "#0e4018", glow: "0 0 15px rgba(0,255,102,0.35)" },
+      golden: { title: "THEME: GOLDEN AMBER (RETRO 1970s)", bg: "#130e04", color: "#ffc83b", prompt: "#ffb703", border: "#3d2c08", glow: "0 0 15px rgba(255,200,59,0.35)" }
+    };
+
+    function previewTheme(tKey) {
+      if (window.playGQSound) playGQSound("cmd");
+      const cfg = themeConfigs[tKey];
+      const box = document.getElementById("theme-demo-box");
+      const title = document.getElementById("demo-theme-title");
+      const p1 = document.getElementById("demo-prompt-1");
+      const p2 = document.getElementById("demo-prompt-2");
+      const k1 = document.getElementById("demo-k-1");
+      const k2 = document.getElementById("demo-k-2");
+
+      box.style.background = cfg.bg;
+      box.style.color = cfg.color;
+      box.style.borderColor = cfg.border;
+      box.style.boxShadow = cfg.glow !== "none" ? cfg.glow : "0 20px 50px rgba(0,0,0,0.3)";
+      title.textContent = cfg.title;
+      p1.style.color = cfg.prompt;
+      p2.style.color = cfg.prompt;
+      k1.style.color = cfg.prompt;
+      k2.style.color = cfg.prompt;
+
+      ["classic", "dark", "matrix", "golden"].forEach(k => {
+        const btn = document.getElementById("tb-" + k);
+        if (btn) btn.className = (k === (tKey === "default" ? "classic" : tKey)) ? "btn sm" : "btn sm outline";
+      });
+    }
+
+    // Hero terminal interactive tester
+    const heroIn = document.getElementById("hero-in");
+    const heroOut = document.getElementById("hero-out");
+
+    function runHeroCmd(cmd) {
+      if (window.playGQSound) playGQSound("cmd");
+      heroIn.value = cmd;
+      if (cmd === "git status") {
+        heroOut.textContent = "On branch feature\nnothing to commit, working tree clean";
+        heroOut.style.color = "#8ce99a";
+      } else if (cmd === "git branch") {
+        heroOut.textContent = "  main\n* feature";
+        heroOut.style.color = "#8ce99a";
+      } else if (cmd.startsWith("git log")) {
+        heroOut.textContent = "a4f91c2 (HEAD -> feature) add auth flow\n8b201f4 (main) feat-1\ne048a12 initial commit";
+        heroOut.style.color = "#d7dde8";
+      } else {
+        heroOut.textContent = "✓ Executed: " + cmd;
+        heroOut.style.color = "#8ce99a";
+      }
+    }
+
+    if (heroIn) {
+      heroIn.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          const val = heroIn.value.trim();
+          if (val) runHeroCmd(val);
+        }
+      });
+    }
+
+    function resetAllProgress() {
+      if (confirm("Reset all local Git Nerchuko progress, XP, and unlock state?")) {
+        localStorage.clear();
+        location.reload();
+      }
+    }
+  </script>
+</body>
+</html>

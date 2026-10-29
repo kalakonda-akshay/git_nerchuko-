@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Git Nerchuko – Learn Git and GitHub by Playing</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="sound.js"></script>
+<script src="shared.js"></script>
+<script src="auth.js"></script>
+<style>
+:root{--bg:#f4f5f0;--pn:#fff;--ink:#16181d;--mut:#6a7080;--ln:#dcdfd6;--ac:#e8590c;--ok:#2b8a3e;--er:#c92a2a;--tm:#14171c;--tt:#d7dde8;--t-border:#2a2f39;--t-prompt:#8ce99a;--t-chip:#1a1e25;--t-chip-txt:#b8c0cf;--t-glow:none;--l0:#e8590c;--l1:#1c7ed6;--l2:#9c36b5;--l3:#2b8a3e;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101216;--pn:#181b21;--ink:#e9ecf2;--mut:#8b93a5;--ln:#2a2f39;--ac:#ff8a3d;--ok:#51cf66;--er:#ff6b6b;--tm:#0a0c0f;--l0:#ff8a3d;--l1:#4dabf7;--l2:#da77f2;--l3:#69db7c}}
+:root[data-theme="dark"]{--bg:#101216;--pn:#181b21;--ink:#e9ecf2;--mut:#8b93a5;--ln:#2a2f39;--ac:#ff8a3d;--ok:#51cf66;--er:#ff6b6b;--tm:#0a0c0f;--l0:#ff8a3d;--l1:#4dabf7;--l2:#da77f2;--l3:#69db7c}
+:root[data-term-theme="default"]{--tm:#14171c;--tt:#d7dde8;--t-border:#2a2f39;--t-prompt:#8ce99a;--t-chip:#1a1e25;--t-chip-txt:#b8c0cf;--t-glow:none}
+:root[data-term-theme="dark"]{--tm:#08090c;--tt:#f0f3f8;--t-border:#242933;--t-prompt:#60a5fa;--t-chip:#131720;--t-chip-txt:#d1d5db;--t-glow:none}
+:root[data-term-theme="matrix"]{--tm:#040d06;--tt:#00ff66;--t-border:#0e4018;--t-prompt:#00ff66;--t-chip:#08210d;--t-chip-txt:#4ade80;--t-glow:0 0 10px rgba(0,255,102,0.25)}
+:root[data-term-theme="golden"]{--tm:#130e04;--tt:#ffc83b;--t-border:#3d2c08;--t-prompt:#ffb703;--t-chip:#241a05;--t-chip-txt:#fde68a;--t-glow:0 0 10px rgba(255,200,59,0.25)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Bricolage Grotesque",system-ui,sans-serif}
+header{display:flex;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid var(--ln);flex-wrap:wrap}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.02em}.logo b{color:var(--ac)}
+.sp{flex:1}.stat{padding:4px 12px;border:1px solid var(--ln);border-radius:99px;background:var(--pn);font-weight:700;font-size:13px}
+button{font:inherit;cursor:pointer;color:inherit}
+.btn{border:1px solid var(--ln);background:var(--pn);border-radius:8px;padding:6px 12px;font-weight:600}.btn:hover{border-color:var(--ac)}
+.btn.p{background:var(--ac);border-color:var(--ac);color:#fff}
+button:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+main{display:grid;grid-template-columns:250px minmax(0,1fr) 400px;gap:14px;padding:14px 18px;height:calc(100vh - 62px);min-height:560px}
+.pn{background:var(--pn);border:1px solid var(--ln);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;min-height:0}
+.pn h3{margin:0;padding:12px 14px;font-size:14px;border-bottom:1px solid var(--ln)}
+#lv{overflow:auto;padding:6px}
+.li{display:flex;gap:10px;width:100%;text-align:left;border:0;background:none;padding:9px 10px;border-radius:8px;align-items:center}
+.li:hover{background:var(--bg)}.li.on{background:var(--bg);box-shadow:inset 3px 0 var(--ac)}
+.li .n{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--ln);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+.li.dn .n{background:var(--ok);border-color:var(--ok);color:#fff}.li small{display:block;color:var(--mut);font-size:12px}
+.li.lk{opacity:.45}
+#mid{display:flex;flex-direction:column;gap:14px;min-height:0}
+#mis{padding:14px 16px}#mis h2{margin:0 0 4px;font-size:20px;letter-spacing:-.01em}
+#mis p{margin:4px 0;color:var(--mut)}#mis .g{color:var(--ink);font-weight:600;margin-top:8px}
+#mis .why{font-size:13px}
+#win{background:color-mix(in srgb,var(--ok) 14%,var(--pn));border-top:1px solid var(--ok);padding:10px 16px;display:none;align-items:center;gap:12px}
+#term{flex:1;background:var(--tm);color:var(--tt);font:13px/1.55 "JetBrains Mono",monospace;display:flex;flex-direction:column;min-height:0;border-radius:12px;border:1px solid var(--t-border,var(--ln));box-shadow:var(--t-glow,none)}
+#out{flex:1;overflow:auto;padding:12px 14px;white-space:pre-wrap;word-break:break-word;text-shadow:var(--t-glow,none)}
+#out .e{color:#ff8787}#out .c{color:#74c0fc}#out .m{color:#868e96}#out .k{color:var(--t-prompt,#8ce99a)}
+#row{display:flex;align-items:center;gap:8px;padding:8px 14px;border-top:1px solid var(--t-border,#2a2f39)}
+#row span{color:var(--t-prompt,#8ce99a)}#in{flex:1;background:none;border:0;color:inherit;font:inherit;outline:0}
+#chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 10px}
+.ch{border:1px solid var(--t-border,#2f3541);background:var(--t-chip,#1a1e25);color:var(--t-chip-txt,#b8c0cf);border-radius:6px;padding:2px 8px;font:12px "JetBrains Mono",monospace}.ch:hover{border-color:var(--ac);color:#fff}
+#rt{display:flex;flex-direction:column;gap:14px;min-height:0}
+.tabs{display:flex;border-bottom:1px solid var(--ln)}.tabs button{flex:1;border:0;background:none;padding:11px;font-weight:700;color:var(--mut);border-bottom:2px solid transparent}
+.tabs button.on{color:var(--ink);border-color:var(--ac)}
+.tp{overflow:auto;flex:1;padding:10px}
+.empty{color:var(--mut);padding:24px 8px;text-align:center}
+#areas{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px}
+#areas div{border:1px dashed var(--ln);border-radius:8px;padding:6px 8px;min-height:64px;font:12px "JetBrains Mono",monospace}
+#areas h4{margin:0 0 4px;font:700 12px "Bricolage Grotesque",sans-serif;color:var(--mut)}
+.f{display:block}.f.mo{color:var(--ac)}.f.st{color:var(--ok)}
+.cs{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px}.cs code{font:12px "JetBrains Mono",monospace;color:var(--ac);white-space:nowrap}
+.cs h4{grid-column:1/-1;margin:10px 0 0;font-size:13px}
+@media(max-width:1000px){main{grid-template-columns:1fr;height:auto}#term{min-height:420px}#lv{max-height:220px}#rt{min-height:520px}}
+@media(prefers-reduced-motion:no-preference){#win{animation:u .3s}@keyframes u{from{opacity:0;transform:translateY(6px)}}}
+</style></head><body>
+<div id="diff-modal" class="gq-modal-overlay" style="display:none">
+  <div class="gq-modal tilt-card">
+    <div class="gq-modal-badge">🎉 Welcome! First time here?</div>
+    <div class="gq-modal-title"><span>⚙️</span> WELCOME TO GIT NERCHUKO! <span>🚀</span></div>
+    <div class="gq-modal-sub">Before we start your Git journey, let's choose the right difficulty level for you. Don't worry – you can change this anytime!</div>
+    
+    <div class="gq-diff-grid">
+      <!-- Beginner Card -->
+      <div class="gq-diff-card selected" data-level="beginner">
+        <div>
+          <div class="gq-diff-header">
+            <span class="gq-diff-icon">🌱</span>
+            <span class="gq-diff-radio">✓</span>
+          </div>
+          <div class="gq-diff-title">Beginner</div>
+          <div class="gq-diff-desc">Learn Git basics</div>
+          <div class="gq-diff-topics-label">Topics covered:</div>
+          <div class="gq-diff-pills">
+            <span class="gq-diff-pill">Introduction to Git</span>
+            <span class="gq-diff-pill">File Operations</span>
+            <span class="gq-diff-pill">Working with Branches</span>
+            <span class="gq-diff-pill">Remote Repositories</span>
+          </div>
+        </div>
+        <div class="gq-diff-footer">
+          <span>Max Points:</span>
+          <b>180 XP</b>
+        </div>
+      </div>
+
+      <!-- Advanced Card -->
+      <div class="gq-diff-card" data-level="advanced">
+        <div>
+          <div class="gq-diff-header">
+            <span class="gq-diff-icon">⚡</span>
+            <span class="gq-diff-radio"></span>
+          </div>
+          <div class="gq-diff-title">Advanced</div>
+          <div class="gq-diff-desc">Master advanced Git workflows</div>
+          <div class="gq-diff-topics-label">Topics covered:</div>
+          <div class="gq-diff-pills">
+            <span class="gq-diff-pill">Merging Branches</span>
+            <span class="gq-diff-pill">Git Workflows</span>
+            <span class="gq-diff-pill">Team Collaboration</span>
+            <span class="gq-diff-pill">Undoing Commits</span>
+            <span class="gq-diff-pill">Git Stash</span>
+          </div>
+        </div>
+        <div class="gq-diff-footer">
+          <span>Max Points:</span>
+          <b>200 XP</b>
+        </div>
+      </div>
+
+      <!-- Pro Card -->
+      <div class="gq-diff-card" data-level="pro">
+        <div>
+          <div class="gq-diff-header">
+            <span class="gq-diff-icon">🚀</span>
+            <span class="gq-diff-radio"></span>
+          </div>
+          <div class="gq-diff-title">Pro</div>
+          <div class="gq-diff-desc">Expert Git techniques</div>
+          <div class="gq-diff-topics-label">Topics covered:</div>
+          <div class="gq-diff-pills">
+            <span class="gq-diff-pill">Rebasing</span>
+            <span class="gq-diff-pill">Advanced Git Techniques</span>
+            <span class="gq-diff-pill">Git Archaeology</span>
+            <span class="gq-diff-pill">Git Mastery</span>
+          </div>
+        </div>
+        <div class="gq-diff-footer">
+          <span>Max Points:</span>
+          <b>270 XP (1.5x)</b>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;align-items:center;gap:12px">
+      <button class="btn-3d" id="btn-start-learning">Start Learning</button>
+    </div>
+  </div>
+</div>
+<header><a class="logo" href="index.html" style="color:inherit;text-decoration:none">git<b>nerchuko</b></a><a href="quiz.html">Exam 🎓</a><a href="arcade.html">Arcade</a><a href="faq.html">FAQ</a><a href="leaderboard.html">Leaderboard</a><a href="shop.html">Shop</a><div class="stat" id="xp"></div><div class="stat" id="pr"></div><button class="stat" id="df" style="cursor:pointer;display:inline-flex;align-items:center;gap:4px" title="Change Difficulty">🌱 Beginner</button><div class="sp"></div>
+<button class="btn" id="rs">Reset level</button><button class="btn" id="th">Theme</button></header>
+<main>
+<section class="pn"><h3>Missions</h3><div id="lv"></div></section>
+<section id="mid">
+<div class="pn"><div id="mis"></div><div id="win"><span id="wt" style="flex:1;font-weight:700"></span><button class="btn p" id="nx">Next mission</button></div></div>
+<div id="term"><div id="out"></div><div id="chips"></div><div id="row"><span>$</span><input id="in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal input" placeholder="type a command, press Enter"></div></div>
+</section>
+<section id="rt"><div class="pn" style="flex:1"><div class="tabs"><button class="on" data-t="g">Commit graph</button><button data-t="c">Cheat sheet</button></div>
+<div id="areas"></div><div class="tp" id="tp"></div></div></section>
+</main>
+<div class="gq-ticker-wrap">
+  <div class="gq-ticker-move">
+    <span>★ GIT COMMIT -M &nbsp;★&nbsp; GIT SWITCH -C &nbsp;★&nbsp; GIT MERGE &nbsp;★&nbsp; GIT REBASE -I &nbsp;★&nbsp; GIT CHERRY-PICK &nbsp;★&nbsp; GIT STASH POP &nbsp;★&nbsp; GIT RESET --HARD &nbsp;★&nbsp; GIT PUSH -U ORIGIN MAIN &nbsp;★&nbsp; GH PR CREATE &nbsp;★&nbsp; GIT LOG --ONELINE &nbsp;★&nbsp; GIT STATUS &nbsp;★&nbsp; GIT REVERT HEAD &nbsp;★&nbsp;</span>
+    <span>★ GIT COMMIT -M &nbsp;★&nbsp; GIT SWITCH -C &nbsp;★&nbsp; GIT MERGE &nbsp;★&nbsp; GIT REBASE -I &nbsp;★&nbsp; GIT CHERRY-PICK &nbsp;★&nbsp; GIT STASH POP &nbsp;★&nbsp; GIT RESET --HARD &nbsp;★&nbsp; GIT PUSH -U ORIGIN MAIN &nbsp;★&nbsp; GH PR CREATE &nbsp;★&nbsp; GIT LOG --ONELINE &nbsp;★&nbsp; GIT STATUS &nbsp;★&nbsp; GIT REVERT HEAD &nbsp;★&nbsp;</span>
+  </div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+let R,L=0,hist=[],hi=0,done=false,tab="g",S={xp:0,st:{},unlockedThemes:["default"],termTheme:"default"};
+try{S=Object.assign({xp:0,st:{},unlockedThemes:["default"],termTheme:"default"},JSON.parse(localStorage.getItem("gq"))||{})}catch(e){}
+if(!Array.isArray(S.unlockedThemes))S.unlockedThemes=["default"];
+if(!S.unlockedThemes.includes("default"))S.unlockedThemes.push("default");
+if(!S.termTheme)S.termTheme="default";
+document.documentElement.dataset.termTheme=S.termTheme;
+const save=()=>{try{localStorage.setItem("gq",JSON.stringify(S))}catch(e){}};
+const fresh=()=>({c:{},b:{},H:"main",det:null,wd:{},idx:{},init:false,rem:null,rb:{},stash:[],tags:{},pr:null,n:0,log:[],errs:0});
+const hc=()=>R.det||R.b[R.H]||null,snap=i=>i?R.c[i].s:{};
+const hs=n=>((n*2654435761)>>>0).toString(16).padStart(8,"0").slice(0,7);
+function anc(i,s=new Set()){if(i&&!s.has(i)){s.add(i);R.c[i].p.forEach(p=>anc(p,s))}return s}
+const isAnc=(a,b)=>anc(b).has(a);
+function mk(msg,p,s){const n=++R.n,id=hs(n);R.c[id]={id,msg,p,s:{...s},n};if(R.det)R.det=id;else R.b[R.H]=id;return id}
+function sync(s){const u={};for(const f in R.wd)if(!(f in R.idx))u[f]=R.wd[f];R.wd={...u,...s};R.idx={...s}}
+function chg(){const h=snap(hc());return{st:Object.keys(R.idx).filter(f=>h[f]!==R.idx[f]),mo:Object.keys(R.idx).filter(f=>R.wd[f]!==undefined&&R.wd[f]!==R.idx[f]),un:Object.keys(R.wd).filter(f=>!(f in R.idx))}}
+const union=(a,b)=>{const r={...a};for(const f in b)r[f]=Math.max(r[f]||0,b[f]);return r};
+function mergeC(t,label,o,say){const h=hc();
+ if(isAnc(t,h)){say("Already up to date.");return}
+ if(isAnc(h,t)){if(R.det)R.det=t;else R.b[R.H]=t;sync(snap(t));say("Updating "+h.slice(0,7)+".."+t.slice(0,7));say("Fast-forward","k");return}
+ const id=mk("Merge "+label,[h,t],union(snap(h),snap(t)));sync(snap(id));say("Merge made by the ort strategy.","k")}
+function run(line){
+ const t=(line.match(/"[^"]*"|'[^']*'|\S+/g)||[]).map(s=>s.replace(/^["']|["']$/g,""));
+ const o=[],say=(x,k="o")=>o.push([x,k]),er=x=>{say(x,"e");o.err=1};
+ if(!t.length)return o;const[c,a,...r]=t;
+ if(c==="clear"){o.clr=1;return o}
+ if(c==="help"){say("Commands: touch, edit, ls, git (init add commit status log branch switch checkout merge reset revert stash tag remote push pull), gh pr create|merge, teammate","m");return o}
+ if(c==="touch"){t.slice(1).forEach(f=>{if(!(f in R.wd))R.wd[f]=1});if(!a)er("usage: touch <file>");return o}
+ if(c==="edit"){if(R.wd[a]===undefined)er("edit: "+a+" does not exist. Try touch "+a);else R.wd[a]++;return o}
+ if(c==="ls"){say(Object.keys(R.wd).join("  ")||"(empty)");return o}
+ if(c==="teammate"){if(!R.rem)return er("No remote yet."),o;const p=R.rb.main,id=hs(++R.n);R.c[id]={id,msg:"Teammate: add team.txt",p:[p],s:{...snap(p),"team.txt":1},n:R.n};R.rb.main=id;say("A teammate pushed a commit to origin/main.","m");return o}
+ if(c==="gh"){
+  if(a!=="pr")return er("try: gh pr create | gh pr merge"),o;
+  if(!R.rem)return er("No remote. Run git remote add origin <url> first."),o;
+  if(r[0]==="create"){if(R.H==="main"||R.rb[R.H]===undefined)return er("Push a non-main branch first: git push -u origin <branch>"),o;R.pr={br:R.H,merged:0};say("https://github.com/you/repo/pull/1","c");say("Pull request #1 opened: "+R.H+" → main","k")}
+  else if(r[0]==="merge"){if(!R.pr)return er("No open pull request. Run gh pr create."),o;const m=R.rb.main,f=R.rb[R.pr.br];
+   if(isAnc(m,f))R.rb.main=f;else R.rb.main=(()=>{const id=hs(++R.n);R.c[id]={id,msg:"Merge pull request #1",p:[m,f],s:union(snap(m),snap(f)),n:R.n};return id})();
+   R.pr.merged=1;say("✓ Merged pull request #1 into main","k")}
+  else er("try: gh pr create | gh pr merge");return o}
+ if(c!=="git")return er(c+": command not found. Type help."),o;
+ if(a==="init"){if(R.init)say("Reinitialized existing Git repository");else{R.init=true;say("Initialized empty Git repository in ~/project/.git/")}return o}
+ if(!R.init)return er("fatal: not a git repository. Run git init first."),o;
+ const dirty=()=>{const x=chg();return x.st.length||x.mo.length};
+ const gone=n=>{if(dirty())return er("error: local changes would be overwritten. Commit or stash them first."),1;if(n)return;};
+ switch(a){
+ case"add":{if(!r.length)return er("Nothing specified. Try git add ."),o;
+  if(r[0]==="."||r[0]==="-A")Object.assign(R.idx,R.wd);else r.forEach(f=>{if(R.wd[f]===undefined)er("fatal: pathspec "+f+" did not match any files");else R.idx[f]=R.wd[f]});return o}
+ case"commit":{let m=null;const i=r.findIndex(x=>x==="-m"||x==="-am");if(i>=0)m=r[i+1];
+  if(r.includes("-am")||r.includes("-a"))for(const f in R.idx)if(R.wd[f]!==undefined)R.idx[f]=R.wd[f];
+  if(!m)return er("Aborting: empty message. Use git commit -m \"message\""),o;
+  const h=hc(),hsn=snap(h),x=chg();if(!x.st.length)return say("Nothing to commit. Stage changes with git add first."),o.err=1,o;
+  const id=mk(m,h?[h]:[],R.idx);say("["+(R.det?"detached HEAD":R.H)+" "+id+"] "+m,"k");say(x.st.length+" file(s) changed");return o}
+ case"status":{const x=chg();say("On branch "+(R.det?"(detached)":R.H));
+  if(x.st.length){say("Changes to be committed:","k");x.st.forEach(f=>say("   "+f,"k"))}
+  if(x.mo.length){say("Changes not staged:","e");x.mo.forEach(f=>say("   modified: "+f,"e"))}
+  if(x.un.length){say("Untracked files:","e");x.un.forEach(f=>say("   "+f,"e"))}
+  if(!x.st.length&&!x.mo.length&&!x.un.length)say("nothing to commit, working tree clean");return o}
+ case"log":{const h=hc();if(!h)return er("fatal: your current branch has no commits yet"),o;
+  [...anc(h)].sort((p,q)=>R.c[q].n-R.c[p].n).forEach(i=>{const rf=[];if(i===h)rf.push("HEAD"+(R.det?"":" -> "+R.H));for(const b in R.b)if(R.b[b]===i&&!(b===R.H&&i===h&&!R.det))rf.push(b);say(i+(rf.length?" ("+rf.join(", ")+") ":" ")+R.c[i].msg)});return o}
+ case"branch":{if(!r.length){Object.keys(R.b).forEach(b=>say((b===R.H&&!R.det?"* ":"  ")+b));if(!Object.keys(R.b).length)say("(no branches yet, commit first)");return o}
+  if(!hc())return er("fatal: no commits yet, cannot create a branch"),o;R.b[r[0]]=hc();return o}
+ case"switch":case"checkout":{const mk2=r.includes("-c")||r.includes("-b"),n=r.filter(x=>x[0]!=="-")[0];
+  if(!n)return er("usage: git "+a+" <branch>"),o;if(gone())return o;
+  if(mk2){if(!hc())return er("fatal: make a commit before branching"),o;R.b[n]=hc();R.H=n;R.det=null;say("Switched to a new branch "+n,"k")}
+  else if(R.b[n]){R.H=n;R.det=null;sync(snap(R.b[n]));say("Switched to branch "+n,"k")}
+  else if(R.c[n]){R.det=n;sync(snap(n));say("HEAD is now detached at "+n,"k")}
+  else er("fatal: invalid reference: "+n);return o}
+ case"merge":{const n=r[0];if(!R.b[n])return er("merge: "+n+" - not something we can merge"),o;if(gone())return o;mergeC(R.b[n],"branch "+n+" into "+R.H,o,say);return o}
+ case"reset":{const m=r.includes("--hard")?"h":r.includes("--soft")?"s":"x",tg=r.filter(x=>x[0]!=="-")[0]||"HEAD";let id=hc();const mm=tg.match(/^HEAD~(\d*)$/);
+  if(mm){for(let i=0;i<(+mm[1]||1);i++)id=id&&R.c[id].p[0]}else if(R.c[tg])id=tg;else if(tg!=="HEAD")return er("fatal: unknown revision "+tg),o;
+  if(!id)return er("fatal: cannot go back that far"),o;
+  if(R.det)R.det=id;else R.b[R.H]=id;if(m==="h"){sync(snap(id));R.wd={...R.wd,...snap(id)}}else if(m==="x")R.idx={...snap(id)};
+  say("HEAD is now at "+id+" "+R.c[id].msg,"k");return o}
+ case"revert":{const h=hc();if(!h)return er("nothing to revert"),o;const p=R.c[h].p[0],id=mk('Revert "'+R.c[h].msg+'"',[h],snap(p));sync(snap(id));say("["+R.H+" "+id+"] Revert \""+R.c[h].msg+"\"","k");return o}
+ case"stash":{if(r[0]==="pop"){const s=R.stash.pop();if(!s)return er("No stash entries found."),o;R.wd={...R.wd,...s};say("Restored your changes.","k");return o}
+  if(r[0]==="list"){R.stash.forEach((s,i)=>say("stash@{"+i+"}"));return o}
+  const x=chg(),f=[...x.mo,...x.st];if(!f.length)return er("No local changes to save"),o;
+  const s={};f.forEach(k=>s[k]=R.wd[k]);R.stash.push(s);const h=snap(hc());R.idx={...h};f.forEach(k=>{if(k in h)R.wd[k]=h[k];else delete R.wd[k]});say("Saved working directory. Tree is clean again.","k");return o}
+ case"tag":{if(!hc())return er("no commits yet"),o;R.tags[r[0]]=hc();return o}
+ case"remote":{if(r[0]==="add"){R.rem=r[2]||"https://github.com/you/repo.git";return o}if(R.rem)say("origin\t"+R.rem);return o}
+ case"push":{if(!R.rem)return er("fatal: no remote. Run: git remote add origin <url>"),o;
+  const br=r.filter(x=>x[0]!=="-"&&x!=="origin")[0]||R.H;if(!R.b[br])return er("error: src refspec "+br+" does not match any"),o;
+  const old=R.rb[br];if(old&&!isAnc(old,R.b[br]))return er("! [rejected] "+br+" (non-fast-forward). Run git pull first."),o;
+  R.rb[br]=R.b[br];say("To "+R.rem);say(old?"   "+old.slice(0,7)+".."+R.b[br].slice(0,7)+"  "+br+" -> "+br:" * [new branch]  "+br+" -> "+br,"k");return o}
+ case"pull":{if(!R.rem||!R.rb[R.H])return er("There is no remote branch to pull from."),o;if(gone())return o;mergeC(R.rb[R.H],"origin/"+R.H,o,say);return o}
+ }
+ er("git: unsupported command "+a+". Type help.");return o}
+const LV=[
+{t:"Create a repo",g:"Turn this folder into a Git repository.",why:"Every project begins with git init. It adds a hidden .git folder that tracks history.",s:[],c:()=>R.init,h:"git init"},
+{t:"Your first commit",g:"Create README.md, stage it, and commit it.",why:"Files move working directory → staging → commit. Staging lets you pick exactly what goes in.",s:["git init","touch README.md"],c:()=>Object.keys(R.c).length>=1,h:'git add .  then  git commit -m "first commit"'},
+{t:"Read the history",g:"Run git log --oneline to see past commits.",why:"History is the point of Git. Each commit is a snapshot with a short hash.",s:["git init","touch a.txt","git add .",'git commit -m "add a"',"edit a.txt","git add .",'git commit -m "update a"'],c:()=>R.log.some(l=>l.startsWith("git log")),h:"git log --oneline"},
+{t:"Branch out",g:"Create a branch called feature and switch to it.",why:"Branches are cheap pointers. Try risky work without touching main.",s:["git init","touch a.txt","git add .",'git commit -m "init"'],c:()=>R.H==="feature",h:"git switch -c feature"},
+{t:"Work on the branch",g:"Edit a.txt, stage it and commit on feature.",why:"Commits move only the branch you are on. Watch the graph split.",s:["git init","touch a.txt","git add .",'git commit -m "init"',"git switch -c feature","edit a.txt"],c:()=>R.H==="feature"&&R.b.feature!==R.b.main,h:'git add .  then  git commit -m "my change"'},
+{t:"Merge it back",g:"Switch to main and merge feature.",why:"Merging brings the branch work home. Here it is a fast-forward because main did not move.",s:["git init","touch a.txt","git add .",'git commit -m "init"',"git switch -c feature","edit a.txt","git add .",'git commit -m "feature work"',"git switch main"],c:()=>R.H==="main"&&isAnc(R.b.feature,R.b.main),h:"git merge feature"},
+{t:"Undo safely",g:"Undo the last commit without rewriting history.",why:"git revert adds a new commit that cancels an old one. Safe on shared branches.",s:["git init","touch a.txt","git add .",'git commit -m "good"',"edit a.txt","git add .",'git commit -m "oops bug"'],c:()=>R.log.some(l=>l.startsWith("git revert"))&&Object.keys(R.c).length===3,h:"git revert HEAD"},
+{t:"Time travel",g:"Move main back one commit with reset --hard.",why:"reset moves the branch pointer. Powerful and local-only: never reset commits you pushed.",s:["git init","touch a.txt","git add .",'git commit -m "one"',"edit a.txt","git add .",'git commit -m "two"',"edit a.txt","git add .",'git commit -m "three"'],c:()=>anc(hc()).size===2,h:"git reset --hard HEAD~1"},
+{t:"Stash your work",g:"Stash the edit, then bring it back with stash pop.",why:"Stash shelves unfinished work so you can switch tasks with a clean tree.",s:["git init","touch a.txt","git add .",'git commit -m "init"',"edit a.txt"],c:()=>R.log.some(l=>l==="git stash")&&R.stash.length===0&&chg().mo.length>0,h:"git stash  then  git stash pop"},
+{t:"Go to GitHub",g:"Add a remote called origin and push main.",why:"GitHub hosts your remote copy. Push uploads commits so teammates can see them.",s:["git init","touch a.txt","git add .",'git commit -m "init"'],c:()=>R.rb.main&&R.rb.main===R.b.main,h:"git remote add origin <url>  then  git push -u origin main"},
+{t:"Sync with a team",g:"A teammate pushed. Run teammate, then git pull.",why:"Pull fetches and merges remote work. If push is rejected, pull first.",s:["git init","touch a.txt","git add .",'git commit -m "init"',"git remote add origin https://github.com/you/repo.git","git push -u origin main"],c:()=>R.log.includes("teammate")&&R.b.main===R.rb.main,h:"teammate  then  git pull"},
+{t:"Open a pull request",g:"Push feature, open a PR, then merge it.",why:"Pull requests are GitHub’s review step. Nothing reaches main without a conversation.",s:["git init","touch a.txt","git add .",'git commit -m "init"',"git remote add origin https://github.com/you/repo.git","git push -u origin main","git switch -c feature","edit a.txt","git add .",'git commit -m "add feature"'],c:()=>R.pr&&R.pr.merged,h:"git push -u origin feature, gh pr create, gh pr merge"},
+{t:"Sandbox",g:"No rules. Experiment freely and watch the graph.",why:"Break things here. Use Reset level to start over.",s:[],c:()=>false,h:"Try anything from the cheat sheet."}];
+const CH=[["Basics",[["git init","start a repo"],["git status","what changed?"],["git add .","stage everything"],['git commit -m "msg"',"save a snapshot"],["git log --oneline","view history"]]],["Branches",[["git switch -c x","new branch"],["git switch x","change branch"],["git merge x","merge x into current"]]],["Undo",[["git revert HEAD","new commit that undoes"],["git reset --hard HEAD~1","drop last commit"],["git stash / stash pop","shelve work"]]],["GitHub",[["git remote add origin url","link repo"],["git push -u origin x","upload"],["git pull","download + merge"],["gh pr create","open pull request"]]]];
+let hintUsed=false;
+function out(l,k){const d=document.createElement("div");if(k)d.className={e:"e",c:"c",m:"m",k:"k"}[k];d.textContent=l;$("#out").appendChild(d);$("#out").scrollTop=1e9}
+function start(i){L=i;R=fresh();done=false;hintUsed=false;$("#out").innerHTML="";LV[i].s.forEach(x=>run(x));R.log=[];R.errs=0;
+ out("Mission "+(i+1)+": "+LV[i].t+". Type help for commands.","m");$("#win").style.display="none";ui()}
+function ui(){const v=LV[L];$("#xp").textContent=S.xp+" XP";$("#pr").textContent=Object.keys(S.st).length+"/"+(LV.length-1)+" done";
+ const dfMap={beginner:"🌱 Beginner",advanced:"⚡ Advanced",pro:"🚀 Pro (Blind)"};
+ $("#df").textContent=dfMap[S.difficulty||"beginner"]||"🌱 Difficulty";
+ let hintHtml="";
+ if(S.difficulty==="beginner"){
+   hintHtml='<div style="margin-top:8px;padding:8px 12px;background:var(--bg);border-radius:8px;border:1px dashed var(--ln);font-size:12.5px"><span style="color:var(--ok);font-weight:700">🌱 Beginner Hint:</span> <code>'+v.h+'</code></div>';
+ } else if(S.difficulty==="pro"){
+   hintHtml='<p><button class="btn sm outline" id="hn" style="font-size:12px;opacity:.8">Peek hint (drops to 1★)</button></p>';
+ } else {
+   hintHtml='<p><button class="btn sm outline" id="hn" style="font-size:12px">Show hint (-1★ rule)</button></p>';
+ }
+ $("#mis").innerHTML="<h2>"+v.t+"</h2><p class=g>Goal: "+v.g+"</p><p class=why>"+v.why+'</p>'+hintHtml;
+ const hn=$("#hn");if(hn)hn.onclick=e=>{hintUsed=true;if(window.playGQSound)playGQSound("key");e.target.parentNode.innerHTML="<div style='margin-top:6px;font-size:12.5px;color:var(--mut)'>Hint: <code>"+v.h+"</code></div>"};
+ $("#lv").innerHTML=LV.map((x,i)=>{const lk=i>0&&i<LV.length-1&&!S.st[i-1]&&!S.st[i];return'<button class="li'+(i===L?" on":"")+(S.st[i]?" dn":"")+(lk?" lk":"")+'" data-i="'+i+'"'+(lk?" disabled":"")+'><span class=n>'+(S.st[i]?"✓":i+1)+"</span><span>"+x.t+"<small>"+(S.st[i]?"★".repeat(S.st[i]):i===LV.length-1?"free play":"mission")+"</small></span></button>"}).join("");
+ document.querySelectorAll(".li").forEach(b=>b.onclick=()=>start(+b.dataset.i));
+ $("#chips").innerHTML=["git status","git add .",'git commit -m ""',"git log --oneline","touch file.txt","edit a.txt"].map(x=>'<button class="ch">'+x+"</button>").join("");
+ document.querySelectorAll(".ch").forEach(b=>b.onclick=()=>{const i=$("#in");i.value=b.textContent;i.focus();if(b.textContent.endsWith('""'))i.setSelectionRange(i.value.length-1,i.value.length-1)});
+ side()}
+function side(){const x=chg(),f=(a,c)=>a.map(n=>'<span class="f '+c+'">'+n+"</span>").join("")||"<span class=m style='color:var(--mut)'>none</span>";
+ $("#areas").innerHTML="<div><h4>Working dir</h4>"+f(Object.keys(R.wd).filter(n=>x.mo.includes(n)||x.un.includes(n)),"mo")+"</div><div><h4>Staged</h4>"+f(x.st,"st")+"</div><div><h4>Committed</h4>"+f(Object.keys(snap(hc())),"")+"</div>";
+ if(tab==="c"){$("#tp").innerHTML='<div class="cs">'+CH.map(([h,rows])=>"<h4>"+h+"</h4>"+rows.map(([c,d])=>"<code>"+c+"</code><span>"+d+"</span>").join("")).join("")+"</div>";return}
+ if(tab==="g"&&S.difficulty==="pro"){
+   $("#tp").innerHTML='<div class="empty" style="padding:36px 14px;text-align:center"><div style="font-size:38px;margin-bottom:10px;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.3))">🔒</div><h3 style="margin:0 0 6px;font-size:16px;color:var(--ink)">Pro Blind Terminal Mode</h3><p style="color:var(--mut);max-width:280px;margin:0 auto 14px;font-size:12.5px">The visual graph is disabled in Pro mode. Inspect branches and commits using <code>git log --oneline</code> and <code>git status</code>.</p><span class="badge" style="background:#cc5de8;color:#fff;font-weight:700">1.5x XP Boost Active</span></div>';
+   return;
+ }
+ const ids=Object.keys(R.c).sort((p,q)=>R.c[p].n-R.c[q].n);
+ if(!ids.length){$("#tp").innerHTML='<div class="empty">No commits yet. Your graph grows here with every commit.</div>';return}
+ const lane={},used={};let mx=0,ch=R.b.main||ids[ids.length-1];
+ while(ch){lane[ch]=0;used[ch]=1;ch=R.c[ch].p[0]}
+ ids.forEach(i=>{if(lane[i]!==undefined)return;const p=R.c[i].p[0];if(p&&lane[p]!==undefined&&!used[p]){lane[i]=lane[p];used[p]=1}else lane[i]=++mx});
+ const X=i=>34+ids.indexOf(i)*58,Y=i=>56+lane[i]*50,col=i=>"var(--l"+(lane[i]%4)+")";
+ const lb={};const add=(i,t,k)=>{if(i&&R.c[i])(lb[i]=lb[i]||[]).push([t,k])};
+ for(const b in R.b)add(R.b[b],b,"b");for(const b in R.rb)add(R.rb[b],"origin/"+b,"r");for(const g in R.tags)add(R.tags[g],"tag "+g,"t");add(hc(),"HEAD","h");
+ let s="";ids.forEach(i=>R.c[i].p.forEach(p=>{s+='<path d="M'+X(p)+" "+Y(p)+"C"+(X(p)+30)+" "+Y(p)+","+(X(i)-30)+" "+Y(i)+","+X(i)+" "+Y(i)+'" fill=none stroke="'+col(i)+'" stroke-width=3 />'}));
+ ids.forEach(i=>{s+='<circle cx='+X(i)+" cy="+Y(i)+' r=9 fill="'+col(i)+'" stroke="var(--pn)" stroke-width=3><title>'+R.c[i].msg+"</title></circle><text x="+X(i)+" y="+(Y(i)+26)+' font-size=10 text-anchor=middle fill="var(--mut)" font-family="JetBrains Mono,monospace">'+i.slice(0,5)+"</text>";
+ (lb[i]||[]).forEach(([t,k],j)=>{const w=t.length*6.4+12,y=Y(i)-24-j*20,f=k==="h"?"var(--ink)":k==="r"?"var(--mut)":col(i);s+='<rect x='+(X(i)-w/2)+" y="+(y-12)+" width="+w+' height=17 rx=8 fill="'+f+'" /><text x='+X(i)+" y="+y+' font-size=10.5 text-anchor=middle fill="'+(k==="h"?"var(--pn)":"#fff")+'" font-family="JetBrains Mono,monospace" font-weight=600>'+t+"</text>"})});
+ $("#tp").innerHTML='<svg width='+(ids.length*58+50)+" height="+(mx*50+130)+' role=img aria-label="Commit graph">'+s+"</svg>";$("#tp").scrollLeft=1e5}
+function win(){done=true;const e=R.errs,diff=S.difficulty||"beginner";
+ let st=1,bonus=0;
+ if(diff==="beginner"){st=e<=1?3:e<=3?2:1;bonus=50+st*10}
+ else if(diff==="advanced"){st=(e===0&&!hintUsed)?3:e<=2?2:1;bonus=60+st*12}
+ else if(diff==="pro"){st=(e===0&&!hintUsed)?3:e<=1?2:1;bonus=Math.round((70+st*15)*1.5)}
+ const v=S.st[L]||0;if(!v)S.xp+=bonus;S.st[L]=Math.max(v,st);save();
+ $("#wt").innerHTML="Mission complete "+"★".repeat(st)+(v?"":"  <b style='color:var(--ac)'>+"+bonus+" XP</b>")+" <small style='opacity:.7'>("+diff+")</small>";
+ $("#win").style.display="flex";if(window.playGQSound)playGQSound("win");ui()}
+$("#in").addEventListener("keydown",e=>{
+ if(window.playGQSound&&e.key.length===1)playGQSound("key");
+ if(e.key==="ArrowUp"){hi=Math.max(0,hi-1);e.target.value=hist[hi]||"";e.preventDefault()}
+ if(e.key==="ArrowDown"){hi=Math.min(hist.length,hi+1);e.target.value=hist[hi]||""}
+ if(e.key!=="Enter")return;const l=e.target.value.trim();e.target.value="";if(!l)return;hist.push(l);hi=hist.length;
+ out("$ "+l,"c");R.log.push(l);const o=run(l);if(o.clr)$("#out").innerHTML="";o.forEach(([x,k])=>out(x,k));
+ if(o.err){R.errs++;if(window.playGQSound)playGQSound("error")}else{if(window.playGQSound)playGQSound("cmd")}
+ side();if(!done&&LV[L].c())win()});
+$("#nx").onclick=()=>start(Math.min(L+1,LV.length-1));
+$("#rs").onclick=()=>start(L);
+$("#th").onclick=()=>{const d=document.documentElement,dk=getComputedStyle(d).getPropertyValue("--bg").trim()==="#101216";const next=dk?"light":"dark";d.dataset.theme=next;try{localStorage.setItem("gq_site_theme",next)}catch(e){}};
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{tab=b.dataset.t;document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("on",x===b));side()});
+
+// Difficulty Modal Logic
+let selectedDiff = S.difficulty || "beginner";
+function updateDiffUI(){
+  document.querySelectorAll(".gq-diff-card").forEach(c=>{
+    const isCur = c.dataset.level === selectedDiff;
+    c.classList.toggle("selected", isCur);
+    const radio = c.querySelector(".gq-diff-radio");
+    if(radio) radio.textContent = isCur ? "✓" : "";
+  });
+}
+document.querySelectorAll(".gq-diff-card").forEach(c=>{
+  c.onclick=()=>{
+    selectedDiff = c.dataset.level;
+    updateDiffUI();
+    if(window.playGQSound) playGQSound("cmd");
+  };
+});
+$("#df").onclick=()=>{
+  selectedDiff = S.difficulty || "beginner";
+  updateDiffUI();
+  $("#diff-modal").style.display = "flex";
+};
+$("#btn-start-learning").onclick=()=>{
+  S.difficulty = selectedDiff;
+  save();
+  $("#diff-modal").style.display = "none";
+  if(window.playGQSound) playGQSound("win");
+  ui();
+  side();
+};
+if(!S.difficulty){
+  selectedDiff = "beginner";
+  updateDiffUI();
+  $("#diff-modal").style.display = "flex";
+}
+
+start(Math.min(Object.keys(S.st).length,LV.length-1));
+</script></body></html>

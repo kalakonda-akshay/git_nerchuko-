@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop – Git Nerchuko</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="sound.js"></script>
+  <script src="shared.js"></script>
+  <script src="auth.js"></script>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="index.html">git<b>nerchuko</b></a>
+    <a href="play.html">Playground</a>
+    <a href="arcade.html">Arcade</a>
+    <a href="quiz.html">🎓 Exam</a>
+    <a href="install.html">Install Git</a>
+    <a href="faq.html">FAQ</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="shop.html" class="active">Shop</a>
+  </nav>
+
+  <main>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+      <div>
+        <h1 style="margin:0 0 4px">XP Shop</h1>
+        <p style="margin:0;color:var(--mut)">Spend your earned XP on custom terminal themes and tactile audio effects.</p>
+      </div>
+      <div class="card" style="margin:0;padding:10px 18px;display:flex;align-items:center;gap:10px">
+        <span style="color:var(--mut);font-weight:600">Balance:</span>
+        <b id="shop-xp" style="font-size:22px;color:var(--ac)">0 XP</b>
+      </div>
+    </div>
+
+    <div id="shop-msg" style="display:none;padding:10px 14px;border-radius:8px;margin-bottom:16px;font-weight:600"></div>
+
+    <h2 style="font-size:22px;margin:24px 0 12px">Terminal Themes</h2>
+    <div class="grid-2" id="themes-grid"></div>
+
+    <h2 style="font-size:22px;margin:32px 0 12px">Audio &amp; Sound FX</h2>
+    <div id="sound-section"></div>
+  </main>
+
+  <script>
+    const THEMES = [
+      {
+        id: "default",
+        name: "Classic Slate",
+        price: 0,
+        desc: "The default dark slate terminal with crisp green status highlights.",
+        bg: "#14171c",
+        color: "#d7dde8",
+        prompt: "#8ce99a",
+        border: "#2a2f39",
+        glow: "none"
+      },
+      {
+        id: "dark",
+        name: "Obsidian Dark",
+        price: 60,
+        desc: "Ultra-deep contrast dark mode with ice blue highlights and slate borders.",
+        bg: "#08090c",
+        color: "#f0f3f8",
+        prompt: "#60a5fa",
+        border: "#242933",
+        glow: "none"
+      },
+      {
+        id: "matrix",
+        name: "Matrix Phosphor",
+        price: 100,
+        desc: "Cyberpunk phosphor green CRT glow with hacker aesthetics.",
+        bg: "#040d06",
+        color: "#00ff66",
+        prompt: "#00ff66",
+        border: "#0e4018",
+        glow: "0 0 10px rgba(0,255,102,0.3)"
+      },
+      {
+        id: "golden",
+        name: "Golden Amber",
+        price: 140,
+        desc: "Warm vintage amber cathode-ray glow inspired by classic 1970s terminals.",
+        bg: "#130e04",
+        color: "#ffc83b",
+        prompt: "#ffb703",
+        border: "#3d2c08",
+        glow: "0 0 10px rgba(255,200,59,0.3)"
+      }
+    ];
+
+    function getGQ() {
+      let s = { xp: 0, st: {}, unlockedThemes: ["default"], termTheme: "default", soundUnlocked: false, soundEnabled: false };
+      try {
+        const raw = JSON.parse(localStorage.getItem("gq"));
+        if (raw && typeof raw === "object") s = Object.assign(s, raw);
+      } catch(e){}
+      if (!Array.isArray(s.unlockedThemes)) s.unlockedThemes = ["default"];
+      if (!s.unlockedThemes.includes("default")) s.unlockedThemes.push("default");
+      if (!s.termTheme) s.termTheme = "default";
+      return s;
+    }
+
+    function saveGQ(s) {
+      try { localStorage.setItem("gq", JSON.stringify(s)); } catch(e){}
+      if (window.applyGQTheme) window.applyGQTheme();
+    }
+
+    let msgTimer;
+    function showMsg(text, isErr) {
+      clearTimeout(msgTimer);
+      const m = document.getElementById("shop-msg");
+      m.style.display = "block";
+      m.style.background = isErr ? "color-mix(in srgb,var(--er) 15%,var(--pn))" : "color-mix(in srgb,var(--ok) 15%,var(--pn))";
+      m.style.color = isErr ? "var(--er)" : "var(--ok)";
+      m.style.border = "1px solid " + (isErr ? "var(--er)" : "var(--ok)");
+      m.textContent = text;
+      msgTimer = setTimeout(() => { m.style.display = "none"; }, 4000);
+    }
+
+    function buyTheme(id) {
+      const s = getGQ();
+      const item = THEMES.find(t => t.id === id);
+      if (!item) return;
+
+      if (s.xp < item.price) {
+        showMsg("Not enough XP! You need " + item.price + " XP to unlock " + item.name + ".", true);
+        if (window.playGQSound) playGQSound("error", true);
+        return;
+      }
+
+      s.xp -= item.price;
+      s.unlockedThemes.push(id);
+      s.termTheme = id;
+      saveGQ(s);
+      showMsg("Unlocked & equipped " + item.name + "!");
+      if (window.playGQSound) playGQSound("win", true);
+      render();
+    }
+
+    function equipTheme(id) {
+      const s = getGQ();
+      const item = THEMES.find(t => t.id === id);
+      if (!item) return;
+
+      s.termTheme = id;
+      saveGQ(s);
+      showMsg("Equipped " + item.name + ".");
+      if (window.playGQSound) playGQSound("cmd", true);
+      render();
+    }
+
+    function buySound() {
+      const s = getGQ();
+      const cost = 80;
+      if (s.xp < cost) {
+        showMsg("Not enough XP! You need " + cost + " XP to unlock the Sound FX Pack.", true);
+        if (window.playGQSound) playGQSound("error", true);
+        return;
+      }
+
+      s.xp -= cost;
+      s.soundUnlocked = true;
+      s.soundEnabled = true;
+      saveGQ(s);
+      showMsg("Unlocked Synthesized Sound FX Pack!");
+      if (window.playGQSound) playGQSound("win", true);
+      render();
+    }
+
+    function toggleSound() {
+      const s = getGQ();
+      s.soundEnabled = !s.soundEnabled;
+      saveGQ(s);
+      if (s.soundEnabled && window.playGQSound) playGQSound("success", true);
+      render();
+    }
+
+    function render() {
+      const s = getGQ();
+      document.getElementById("shop-xp").textContent = s.xp + " XP";
+
+      const grid = document.getElementById("themes-grid");
+      grid.innerHTML = THEMES.map(t => {
+        const isUnlocked = s.unlockedThemes.includes(t.id);
+        const isEquipped = s.termTheme === t.id;
+        
+        let btnHtml = "";
+        if (isEquipped) {
+          btnHtml = `<button class="btn outline" disabled style="opacity:1;border-color:var(--ac);color:var(--ac)">Equipped</button>`;
+        } else if (isUnlocked) {
+          btnHtml = `<button class="btn outline" onclick="equipTheme('${t.id}')">Equip</button>`;
+        } else {
+          const canAfford = s.xp >= t.price;
+          btnHtml = `<button class="btn ${canAfford ? '' : 'outline'}" onclick="buyTheme('${t.id}')" ${canAfford ? '' : 'disabled'}>Unlock (${t.price} XP)</button>`;
+        }
+
+        const badgeHtml = isEquipped ? '<span class="badge ac">Active</span>' : isUnlocked ? '<span class="badge ok">Owned</span>' : `<span class="badge">${t.price} XP</span>`;
+
+        return `
+          <div class="card" style="display:flex;flex-direction:column;justify-content:space-between">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <h3 style="margin:0;font-size:17px">${t.name}</h3>
+                ${badgeHtml}
+              </div>
+              <p style="color:var(--mut);font-size:13px;margin:0 0 14px">${t.desc}</p>
+              <div style="background:${t.bg};color:${t.color};border:1px solid ${t.border};border-radius:8px;padding:12px;font:12px/1.5 'JetBrains Mono',monospace;margin-bottom:16px;box-shadow:${t.glow}">
+                <div><span style="color:${t.prompt}">$</span> git status</div>
+                <div style="opacity:.8">On branch main</div>
+                <div style="color:${t.prompt}">nothing to commit, working tree clean</div>
+              </div>
+            </div>
+            <div>${btnHtml}</div>
+          </div>
+        `;
+      }).join("");
+
+      const soundSec = document.getElementById("sound-section");
+      const soundUnlocked = !!s.soundUnlocked;
+      const soundEnabled = s.soundEnabled !== false;
+
+      let soundBtn = "";
+      if (!soundUnlocked) {
+        const canAffordSound = s.xp >= 80;
+        soundBtn = `<button class="btn ${canAffordSound ? '' : 'outline'}" onclick="buySound()" ${canAffordSound ? '' : 'disabled'}>Unlock Sound Pack (80 XP)</button>`;
+      } else {
+        soundBtn = `<button class="btn ${soundEnabled ? 'outline' : ''}" onclick="toggleSound()">${soundEnabled ? 'Disable Sounds' : 'Enable Sounds'}</button>`;
+      }
+
+      const soundBadge = !soundUnlocked ? '<span class="badge">80 XP</span>' : (soundEnabled ? '<span class="badge ok">Active: ON</span>' : '<span class="badge">Active: OFF</span>');
+
+      soundSec.innerHTML = `
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+            <div>
+              <h3 style="margin:0 0 4px;font-size:18px">Synthesized Sound FX Pack</h3>
+              <p style="margin:0;color:var(--mut);font-size:14px">Real-time synthesized Web Audio clicks and chimes for typing, commands, errors, and mission wins.</p>
+            </div>
+            <div>${soundBadge}</div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:14px;border-top:1px solid var(--ln);padding-top:14px">
+            ${soundBtn}
+            <div style="display:flex;gap:6px;align-items:center;margin-left:auto;flex-wrap:wrap">
+              <span style="font-size:12px;color:var(--mut);font-weight:600">Preview:</span>
+              <button class="btn outline sm" onclick="playGQSound('key', true)">Click</button>
+              <button class="btn outline sm" onclick="playGQSound('cmd', true)">Command</button>
+              <button class="btn outline sm" onclick="playGQSound('success', true)">Success</button>
+              <button class="btn outline sm" onclick="playGQSound('error', true)">Error</button>
+              <button class="btn outline sm" onclick="playGQSound('win', true)">Victory</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    render();
+  </script>
+
+  <footer style="max-width:960px;margin:40px auto 20px;padding:24px 16px;border-top:1px solid var(--ln);color:var(--mut);font-size:13px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <div><b>gitnerchuko</b> © 2026 Kalaonda Akshay. All rights reserved.</div>
+    <div style="display:flex;gap:14px;font-weight:600">
+      <a href="play.html" style="color:inherit;text-decoration:none">Playground</a>
+      <a href="arcade.html" style="color:inherit;text-decoration:none">Arcade</a>
+      <a href="faq.html" style="color:inherit;text-decoration:none">FAQ</a>
+    </div>
+  </footer>
+</body>
+</html>

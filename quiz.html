@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Git &amp; GitHub Master Certification Exam – Git Nerchuko</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="sound.js"></script>
+  <script src="shared.js"></script>
+  <script src="auth.js"></script>
+  <style>
+    /* Certificate Printable Styles */
+    @media print {
+      body * { visibility: hidden; }
+      #certificate-render-zone, #certificate-render-zone * { visibility: visible; }
+      #certificate-render-zone {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none !important;
+        border: none !important;
+      }
+      .no-print { display: none !important; }
+    }
+
+    .cert-frame {
+      background: radial-gradient(ellipse at 50% 30%, #fffdfa 0%, #fbf7ee 100%);
+      color: #1a1714;
+      border: 12px double #b45309;
+      border-radius: 16px;
+      padding: 48px 42px;
+      position: relative;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.3), 0 0 30px rgba(180,83,9,0.15);
+      font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    }
+    .cert-frame::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1.5px solid rgba(180, 83, 9, 0.4);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+    .cert-seal {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f59e0b 0%, #b45309 70%, #78350f 100%);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      box-shadow: 0 8px 20px rgba(180, 83, 9, 0.4);
+      border: 3px solid #fef3c7;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    /* Option button styling */
+    .quiz-opt-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      text-align: left;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1.5px solid var(--ln);
+      background: var(--pn);
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1.4;
+    }
+    .quiz-opt-btn:hover:not(:disabled) {
+      border-color: var(--ac);
+      background: color-mix(in srgb, var(--ac) 8%, var(--pn));
+      transform: translateX(4px);
+    }
+    .quiz-opt-btn.correct {
+      border-color: #22c55e !important;
+      background: rgba(34, 197, 94, 0.15) !important;
+      color: #15803d !important;
+    }
+    .quiz-opt-btn.wrong {
+      border-color: #ef4444 !important;
+      background: rgba(239, 68, 68, 0.15) !important;
+      color: #b91c1c !important;
+    }
+    .quiz-opt-key {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--ink) 8%, transparent);
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex: none;
+    }
+  </style>
+</head>
+<body>
+  <nav class="no-print">
+    <a class="logo" href="index.html">git<b>nerchuko</b></a>
+    <a href="play.html">Playground</a>
+    <a href="arcade.html">Arcade</a>
+    <a href="quiz.html" class="active">🎓 Exam &amp; Certificate</a>
+    <a href="install.html">Install Git</a>
+    <a href="faq.html">FAQ</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="shop.html">Shop</a>
+  </nav>
+
+  <main style="max-width:880px;margin:30px auto;padding:0 20px">
+    
+    <!-- STAGE 1: INTRO / ONBOARDING -->
+    <div id="quiz-intro-stage">
+      <div class="card tilt-card" style="padding:36px;border-radius:24px;background:var(--pn);border:1.5px solid var(--ln);box-shadow:0 25px 60px rgba(0,0,0,0.1)">
+        <div style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff;font-size:12px;font-weight:700;padding:5px 14px;border-radius:99px;margin-bottom:14px">
+          🎓 OFFICIAL ACCREDITATION EXAM
+        </div>
+
+        <h1 style="font-size: clamp(28px, 4.5vw, 38px);font-weight:800;letter-spacing:-0.02em;margin:0 0 10px">
+          Git &amp; GitHub Master Certification
+        </h1>
+        <p style="color:var(--mut);font-size:16px;line-height:1.6;margin:0 0 24px">
+          Prove your version control mastery in a rigorous 15-question examination. Score at least <strong>80% (12/15)</strong> to earn your verified Certificate of Competence signed by <strong>Kalaonda Akshay</strong>.
+        </p>
+
+        <!-- Upfront Name & Authentication Warning -->
+        <div id="quiz-auth-status-card" class="auth-cert-card" style="margin-bottom:24px;border-radius:16px">
+          <div class="auth-cert-icon">🎓</div>
+          <div class="auth-cert-text" style="color:inherit">
+            <strong style="color:#f59e0b;font-size:14.5px;display:block;margin-bottom:4px">
+              Important Certificate Recipient Notice:
+            </strong>
+            <div id="quiz-auth-text" style="font-size:13.5px;line-height:1.5">
+              Checking user authentication status...
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-Tier Exam Breakdown Cards -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px">
+          <div style="background:color-mix(in srgb,var(--pn) 90%,var(--bg));border:1px solid var(--ln);border-radius:14px;padding:16px">
+            <div style="font-size:22px;margin-bottom:4px">🌱</div>
+            <div style="font-weight:800;font-size:15px">5 Easy Questions</div>
+            <div style="color:var(--mut);font-size:12.5px;margin-top:4px">Init, staging index, commit syntax, status, and branch pointers.</div>
+          </div>
+
+          <div style="background:color-mix(in srgb,var(--pn) 90%,var(--bg));border:1px solid var(--ln);border-radius:14px;padding:16px">
+            <div style="font-size:22px;margin-bottom:4px">⚡</div>
+            <div style="font-weight:800;font-size:15px">5 Medium Questions</div>
+            <div style="color:var(--mut);font-size:12.5px;margin-top:4px">Fast-forward merges, git stash, revert vs reset, remote tracking.</div>
+          </div>
+
+          <div style="background:color-mix(in srgb,var(--pn) 90%,var(--bg));border:1px solid var(--ln);border-radius:14px;padding:16px">
+            <div style="font-size:22px;margin-bottom:4px">🚀</div>
+            <div style="font-weight:800;font-size:15px">5 Hard Questions</div>
+            <div style="color:var(--mut);font-size:12.5px;margin-top:4px">Interactive rebase squash, cherry-pick, reflog recovery, bisect search.</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <button class="btn-3d" id="btn-start-quiz" style="font-size:16px;padding:14px 34px">
+            Start 15-Question Exam 🚀
+          </button>
+          <button class="btn outline" onclick="window.openAuthModal('register')" style="border-radius:12px;padding:13px 20px;font-weight:700">
+            Sign In / Register First 👤
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAGE 2: ACTIVE QUESTION RUNNER -->
+    <div id="quiz-runner-stage" style="display:none">
+      <div class="card" style="padding:28px 32px;border-radius:22px;background:var(--pn);border:1.5px solid var(--ln)">
+        <!-- Top Meta Header -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span id="q-tier-pill" style="padding:4px 12px;border-radius:99px;font-size:12px;font-weight:800;letter-spacing:0.04em"></span>
+            <span id="q-counter" style="font-weight:700;font-size:14px;color:var(--mut)">Question 1 of 15</span>
+          </div>
+          <div style="font-weight:800;font-size:14px;color:var(--ac)" id="q-live-score">Score: 0/0</div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div style="width:100%;height:8px;background:color-mix(in srgb,var(--ink) 10%,transparent);border-radius:99px;overflow:hidden;margin-bottom:24px">
+          <div id="q-progress-fill" style="width:0%;height:100%;background:linear-gradient(90deg,#ff8a3d,#84cc16);transition:width 0.3s ease"></div>
+        </div>
+
+        <!-- Question Prompt -->
+        <h2 id="q-title" style="font-size:21px;font-weight:800;line-height:1.4;margin:0 0 14px"></h2>
+
+        <!-- Optional Code/Terminal Snippet -->
+        <div id="q-snippet" style="display:none;background:#0d1117;color:#58a6ff;padding:12px 16px;border-radius:10px;font:13px/1.5 'JetBrains Mono',monospace;margin-bottom:20px;border:1px solid #30363d;white-space:pre-wrap"></div>
+
+        <!-- Options Grid -->
+        <div id="q-options" style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px"></div>
+
+        <!-- Explanation box -->
+        <div id="q-explanation" style="display:none;padding:12px 16px;border-radius:10px;font-size:13.5px;line-height:1.5;margin-bottom:20px"></div>
+
+        <div style="display:flex;justify-content:flex-end">
+          <button class="btn-3d" id="btn-next-question" style="display:none;padding:11px 26px;font-size:14.5px">
+            Next Question →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAGE 3: RESULTS & CERTIFICATE ISSUANCE -->
+    <div id="quiz-result-stage" style="display:none">
+      <!-- Success Banner / Grade Summary -->
+      <div id="result-summary-card" class="card" style="padding:28px;border-radius:20px;background:var(--pn);margin-bottom:28px"></div>
+
+      <!-- Printable Certificate Zone -->
+      <div id="certificate-render-zone" style="display:none">
+        <div class="cert-frame">
+          <div style="text-align:center;margin-bottom:24px">
+            <div style="font-size:12px;font-weight:800;letter-spacing:0.18em;color:#b45309;text-transform:uppercase;margin-bottom:6px">
+              ★ OFFICIAL ACCREDITATION OF TECHNICAL COMPETENCE ★
+            </div>
+            <h1 style="font-size:clamp(26px, 4vw, 38px);font-weight:900;letter-spacing:-0.02em;margin:0 0 6px;color:#1a1714">
+              CERTIFICATE OF GIT &amp; GITHUB MASTERY
+            </h1>
+            <div style="font-size:14px;color:#78350f;font-style:italic">
+              Issued under the authority of Git Nerchuko Version Control Engineering
+            </div>
+          </div>
+
+          <div style="text-align:center;margin:32px 0 28px">
+            <div style="font-size:14px;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">This certifies that</div>
+            <div id="cert-recipient-name" style="font-size:clamp(32px, 5.5vw, 46px);font-weight:900;letter-spacing:-0.02em;color:#b45309;border-bottom:2.5px solid #d97706;display:inline-block;padding:0 32px 6px">
+              Kalaonda Akshay
+            </div>
+            <p style="max-width:620px;margin:20px auto 0;color:#374151;font-size:15px;line-height:1.6">
+              has successfully achieved mastery across all foundational and advanced Git architecture modules, passing the comprehensive <strong>15-Question Examination</strong> covering atomic commits, fast-forward merges, interactive rebasing, reflog recovery, and 3-way conflict resolution.
+            </p>
+          </div>
+
+          <!-- Score Breakdown Badges on Certificate -->
+          <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:36px">
+            <div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:6px 14px;border-radius:99px;font-size:12.5px;font-weight:700">
+              🌱 5/5 Foundations Passed
+            </div>
+            <div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:6px 14px;border-radius:99px;font-size:12.5px;font-weight:700">
+              ⚡ 5/5 Workflows Passed
+            </div>
+            <div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:6px 14px;border-radius:99px;font-size:12.5px;font-weight:700">
+              🚀 5/5 Architecture Passed
+            </div>
+            <div id="cert-score-pill" style="background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;padding:6px 14px;border-radius:99px;font-size:12.5px;font-weight:800">
+              Score: 100%
+            </div>
+          </div>
+
+          <!-- Bottom Signatures & Seal -->
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:24px;padding-top:20px;border-top:1.5px dashed rgba(180,83,9,0.3);flex-wrap:wrap;gap:20px">
+            <div>
+              <div style="font-family:'Courier New',monospace;font-size:12px;color:#6b7280;margin-bottom:4px">
+                CERTIFICATE ID: <strong id="cert-id-tag" style="color:#b45309">GN-2026-X892F1</strong>
+              </div>
+              <div style="font-size:12.5px;color:#6b7280">
+                ISSUE DATE: <strong id="cert-date-tag">2026-10-29</strong>
+              </div>
+              <div style="font-size:11.5px;color:#9ca3af;margin-top:4px">
+                Verify authentic accreditation at gitnerchuko.dev/verify
+              </div>
+            </div>
+
+            <!-- 3D Gold Seal -->
+            <div class="cert-seal">
+              <span>GIT NERCHUKO<br>★ VERIFIED ★<br>MASTER</span>
+            </div>
+
+            <!-- Signature -->
+            <div style="text-align:right">
+              <div style="font-family:'Brush Script MT',cursive,sans-serif;font-size:26px;color:#b45309;line-height:1;margin-bottom:2px">
+                Kalaonda Akshay
+              </div>
+              <div style="border-top:1.5px solid #1a1714;padding-top:4px;font-weight:800;font-size:13px">
+                Kalaonda Akshay
+              </div>
+              <div style="font-size:11.5px;color:#6b7280">
+                Founder &amp; Lead Systems Architect
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="no-print" style="display:flex;justify-content:center;gap:14px;margin-top:28px;flex-wrap:wrap">
+          <button class="btn-3d" onclick="window.print()" style="padding:13px 30px;font-size:15.5px">
+            🖨️ Print / Save as PDF
+          </button>
+          <button class="btn outline" onclick="copyCertLink()" style="border-radius:12px;padding:12px 20px;font-weight:700">
+            📋 Copy Verification Link
+          </button>
+          <button class="btn outline" onclick="restartQuiz()" style="border-radius:12px;padding:12px 20px;font-weight:700">
+            🔁 Retake Exam
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="no-print" style="max-width:960px;margin:50px auto 20px;padding:24px 16px;border-top:1px solid var(--ln);color:var(--mut);font-size:13px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <div><b>gitnerchuko</b> © 2026 Kalaonda Akshay. All rights reserved.</div>
+    <div style="display:flex;gap:14px;font-weight:600">
+      <a href="play.html" style="color:inherit;text-decoration:none">Playground</a>
+      <a href="arcade.html" style="color:inherit;text-decoration:none">Arcade</a>
+      <a href="shop.html" style="color:inherit;text-decoration:none">Shop</a>
+      <a href="faq.html" style="color:inherit;text-decoration:none">FAQ</a>
+    </div>
+  </footer>
+
+  <script>
+    // 15 Comprehensive Questions (5 Easy, 5 Medium, 5 Hard)
+    const QUESTIONS = [
+      // 5 EASY
+      {
+        tier: "easy",
+        tierLabel: "🌱 EASY (1/5)",
+        title: "Which Git command initializes a brand new local repository in your current working directory?",
+        snippet: "$ git ______",
+        options: ["git create", "git init", "git start", "git repo --new"],
+        answer: 1,
+        explanation: "`git init` creates an initial .git directory containing subdirectories for objects, refs/heads, refs/tags, and template files."
+      },
+      {
+        tier: "easy",
+        tierLabel: "🌱 EASY (2/5)",
+        title: "How do you stage all modified and newly created untracked files in the current directory for the upcoming commit?",
+        snippet: "$ git ______",
+        options: ["git commit -a", "git add .", "git stage --all-files", "git push --all"],
+        answer: 1,
+        explanation: "`git add .` stages all file changes in the current directory tree into Git's index staging area."
+      },
+      {
+        tier: "easy",
+        tierLabel: "🌱 EASY (3/5)",
+        title: "What is the standard command to record staged index changes into the repository with an explanatory message?",
+        snippet: "$ git commit ______ \"Initial release\"",
+        options: ["-m", "-msg", "--text", "-record"],
+        answer: 0,
+        explanation: "The `-m` flag specifies the commit log message inline without opening an external text editor."
+      },
+      {
+        tier: "easy",
+        tierLabel: "🌱 EASY (4/5)",
+        title: "Which command shows the current branch name, untracked files, and changes currently staged for commit?",
+        options: ["git diff --all", "git check", "git status", "git log --working"],
+        answer: 2,
+        explanation: "`git status` inspects the state of the working directory and the staging area."
+      },
+      {
+        tier: "easy",
+        tierLabel: "🌱 EASY (5/5)",
+        title: "What is the modern, recommended Git command to create and switch to a new branch named 'feature/auth' in a single command?",
+        snippet: "$ git ______ feature/auth",
+        options: ["branch -new", "switch -c", "checkout -new", "fork -b"],
+        answer: 1,
+        explanation: "`git switch -c <name>` (introduced in Git 2.23) is the dedicated and safest command to create and switch branches."
+      },
+
+      // 5 MEDIUM
+      {
+        tier: "medium",
+        tierLabel: "⚡ MEDIUM (1/5)",
+        title: "When merging branch 'dev' into 'main' where 'dev' is a direct descendant with no divergent commits on 'main', which merge strategy is executed?",
+        snippet: "main: A---B\n              \\\ndev:           C---D  -> git merge dev",
+        options: ["Recursive 3-way merge", "Fast-forward merge", "Squash merge", "Octopus merge"],
+        answer: 1,
+        explanation: "In a fast-forward merge, Git simply moves the current branch pointer forward to the target commit without creating an extra merge commit."
+      },
+      {
+        tier: "medium",
+        tierLabel: "⚡ MEDIUM (2/5)",
+        title: "You are halfway through uncommitted edits on 'feature', but must immediately switch to 'main' to fix a hotfix. How do you save your unfinished work temporarily?",
+        options: [
+          "Run `git reset --hard` to discard changes",
+          "Run `git stash`, switch branches, and later run `git stash pop`",
+          "Delete the modified files and re-clone",
+          "Run `git commit --temporary`"
+        ],
+        answer: 1,
+        explanation: "`git stash` stashes dirty working directory and index state on a stack, giving you a clean working copy to switch branches."
+      },
+      {
+        tier: "medium",
+        tierLabel: "⚡ MEDIUM (3/5)",
+        title: "You pushed a faulty commit to a shared team remote branch. What is the safest command to undo it without rewriting historical commit hashes?",
+        snippet: "$ git ______ HEAD",
+        options: ["reset --hard", "revert", "delete", "checkout --undo"],
+        answer: 1,
+        explanation: "`git revert HEAD` creates a new inverse commit that records the rollback, preserving commit history for collaborators."
+      },
+      {
+        tier: "medium",
+        tierLabel: "⚡ MEDIUM (4/5)",
+        title: "When pushing a newly created local branch 'feature' to a remote for the first time, which flag sets upstream tracking so future `git pull` knows where to sync?",
+        snippet: "$ git push ______ origin feature",
+        options: ["--track-all", "-u", "-set-remote", "-b"],
+        answer: 1,
+        explanation: "The `-u` (or `--set-upstream`) flag links the local branch to the remote branch for effortless subsequent pulls and pushes."
+      },
+      {
+        tier: "medium",
+        tierLabel: "⚡ MEDIUM (5/5)",
+        title: "What is the critical difference between `git reset --soft HEAD~1` and `git reset --hard HEAD~1`?",
+        options: [
+          "`--soft` moves HEAD back but keeps changes staged; `--hard` destroys both commit and working tree edits",
+          "`--soft` only works on main branches; `--hard` works on feature branches",
+          "`--soft` creates a merge commit; `--hard` creates a detached HEAD",
+          "`--soft` requires internet; `--hard` is offline"
+        ],
+        answer: 0,
+        explanation: "`--soft` leaves working tree files and index intact, allowing you to redo commits. `--hard` discards uncommitted changes permanently."
+      },
+
+      // 5 HARD
+      {
+        tier: "hard",
+        tierLabel: "🚀 HARD (1/5)",
+        title: "You want to squash and clean up your last 4 local commits before opening a Pull Request. Which command starts this interactive workflow?",
+        snippet: "$ git ______ HEAD~4",
+        options: ["squash -i", "rebase -i", "merge --squash-all", "commit --combine"],
+        answer: 1,
+        explanation: "`git rebase -i HEAD~4` opens an interactive todo list where you can `squash`, `fixup`, `reword`, or `drop` commits."
+      },
+      {
+        tier: "hard",
+        tierLabel: "🚀 HARD (2/5)",
+        title: "How do you copy and apply a single specific bugfix commit (e.g. hash '7a19c4e') from 'develop' directly onto your current branch without merging 'develop'?",
+        snippet: "$ git ______ 7a19c4e",
+        options: ["merge --commit", "cherry-pick", "pull --single", "patch -apply"],
+        answer: 1,
+        explanation: "`git cherry-pick <commit>` introduces the exact diff recorded in a specific commit into the current HEAD branch."
+      },
+      {
+        tier: "hard",
+        tierLabel: "🚀 HARD (3/5)",
+        title: "You accidentally deleted a feature branch with unmerged commits (`git branch -D feat-login`). Which command helps you find the lost commit hash to recover it?",
+        options: [
+          "Lost commits are deleted from the disk permanently and cannot be found",
+          "Run `git reflog` to inspect the chronological journal of ref updates",
+          "Check the system Recycle Bin or Trash",
+          "Run `git log --deleted-branches`"
+        ],
+        answer: 1,
+        explanation: "`git reflog` records all local HEAD movements and branch pointer changes, allowing you to find 'dangling' commits and recover them."
+      },
+      {
+        tier: "hard",
+        tierLabel: "🚀 HARD (4/5)",
+        title: "Which specialized Git tool runs an automated binary search between a known good commit and a bad commit to pinpoint which commit introduced a bug?",
+        snippet: "$ git ______ start\n$ git ______ bad\n$ git ______ good v1.0",
+        options: ["search", "bisect", "blame --binary", "inspect -tree"],
+        answer: 1,
+        explanation: "`git bisect` uses logarithmic binary search (O(log N)) to isolate regressions in large historical codebases."
+      },
+      {
+        tier: "hard",
+        tierLabel: "🚀 HARD (5/5)",
+        title: "In a Git merge conflict file, how do the conflict markers demarcate the conflicting versions?",
+        snippet: "<<<<<<< HEAD\n  console.log('Current branch code');\n=======\n  console.log('Incoming branch code');\n>>>>>>> feature/v2",
+        options: [
+          "Between `<<<<<<< HEAD` and `=======` is the current branch; between `=======` and `>>>>>>>` is the incoming branch",
+          "The top is always invalid code; the bottom is valid code",
+          "`HEAD` denotes syntax errors; `feature` denotes warnings",
+          "The conflict markers are generated by your terminal emulator, not Git"
+        ],
+        answer: 0,
+        explanation: "`<<<<<<< HEAD` represents what was on your checked-out branch. `=======` separates it from what was on the branch you are merging (`>>>>>>>`)."
+      }
+    ];
+
+    let currentQ = 0;
+    let score = 0;
+    let answered = false;
+
+    // Check auth status & update notice
+    function updateAuthNotice() {
+      const authText = document.getElementById("quiz-auth-text");
+      const user = window.GNAuth.getUser();
+      if (user) {
+        authText.innerHTML = `
+          ✅ <strong>Logged in as:</strong> <span style="color:#b45309;font-weight:800">${user.fullName}</span> (@${user.username})<br>
+          This exact name will be permanently engraved on your Certificate upon scoring &ge; 80% (12/15).
+        `;
+      } else {
+        authText.innerHTML = `
+          You are currently <strong>not logged in</strong>. You can take the exam right now, but you will need to enter your Full Name or sign in to generate and print your official verified Certificate.
+          <button class="btn sm" onclick="window.openAuthModal('register')" style="margin-left:8px;padding:3px 10px;font-size:12px;background:var(--ac);color:#fff">Sign In Now</button>
+        `;
+      }
+    }
+
+    updateAuthNotice();
+    window.addEventListener("gn_auth_changed", updateAuthNotice);
+
+    // Start Quiz
+    document.getElementById("btn-start-quiz").onclick = () => {
+      if (window.playGQSound) window.playGQSound("cmd");
+      document.getElementById("quiz-intro-stage").style.display = "none";
+      document.getElementById("quiz-runner-stage").style.display = "block";
+      currentQ = 0;
+      score = 0;
+      loadQuestion(0);
+    };
+
+    function loadQuestion(idx) {
+      answered = false;
+      const q = QUESTIONS[idx];
+      const tierPill = document.getElementById("q-tier-pill");
+      const counter = document.getElementById("q-counter");
+      const liveScore = document.getElementById("q-live-score");
+      const title = document.getElementById("q-title");
+      const snippet = document.getElementById("q-snippet");
+      const optionsBox = document.getElementById("q-options");
+      const explanation = document.getElementById("q-explanation");
+      const btnNext = document.getElementById("btn-next-question");
+      const fill = document.getElementById("q-progress-fill");
+
+      fill.style.width = ((idx / QUESTIONS.length) * 100) + "%";
+      counter.textContent = `Question ${idx + 1} of ${QUESTIONS.length}`;
+      liveScore.textContent = `Score: ${score}/${idx}`;
+      title.textContent = q.title;
+
+      // Tier styling
+      tierPill.textContent = q.tierLabel;
+      if (q.tier === "easy") {
+        tierPill.style.background = "#dcfce7";
+        tierPill.style.color = "#15803d";
+      } else if (q.tier === "medium") {
+        tierPill.style.background = "#fef3c7";
+        tierPill.style.color = "#b45309";
+      } else {
+        tierPill.style.background = "#fae8ff";
+        tierPill.style.color = "#86198f";
+      }
+
+      // Snippet
+      if (q.snippet) {
+        snippet.textContent = q.snippet;
+        snippet.style.display = "block";
+      } else {
+        snippet.style.display = "none";
+      }
+
+      // Options
+      optionsBox.innerHTML = "";
+      explanation.style.display = "none";
+      btnNext.style.display = "none";
+
+      q.options.forEach((opt, oIdx) => {
+        const btn = document.createElement("button");
+        btn.className = "quiz-opt-btn";
+        btn.innerHTML = `<span class="quiz-opt-key">${oIdx + 1}</span> <span>${opt}</span>`;
+        btn.onclick = () => selectOption(oIdx);
+        optionsBox.appendChild(btn);
+      });
+    }
+
+    function selectOption(chosenIdx) {
+      if (answered) return;
+      answered = true;
+      const q = QUESTIONS[currentQ];
+      const buttons = document.querySelectorAll(".quiz-opt-btn");
+      const explanation = document.getElementById("q-explanation");
+      const btnNext = document.getElementById("btn-next-question");
+
+      buttons.forEach(b => b.disabled = true);
+
+      if (chosenIdx === q.answer) {
+        score++;
+        if (window.playGQSound) window.playGQSound("success");
+        buttons[chosenIdx].classList.add("correct");
+        explanation.style.background = "rgba(34, 197, 94, 0.12)";
+        explanation.style.border = "1px solid #22c55e";
+        explanation.style.color = "#15803d";
+        explanation.innerHTML = `<strong>✓ Correct!</strong> ${q.explanation}`;
+      } else {
+        if (window.playGQSound) window.playGQSound("error");
+        buttons[chosenIdx].classList.add("wrong");
+        buttons[q.answer].classList.add("correct");
+        explanation.style.background = "rgba(239, 68, 68, 0.12)";
+        explanation.style.border = "1px solid #ef4444";
+        explanation.style.color = "#b91c1c";
+        explanation.innerHTML = `<strong>✗ Incorrect.</strong> The correct answer was: <em>${q.options[q.answer]}</em>.<br>${q.explanation}`;
+      }
+
+      explanation.style.display = "block";
+      btnNext.style.display = "inline-flex";
+      btnNext.textContent = (currentQ === QUESTIONS.length - 1) ? "View Certification Results 🏆" : "Next Question →";
+      document.getElementById("q-live-score").textContent = `Score: ${score}/${currentQ + 1}`;
+    }
+
+    // Keyboard shortcuts (1, 2, 3, 4, Enter)
+    document.addEventListener("keydown", (e) => {
+      if (document.getElementById("quiz-runner-stage").style.display !== "none") {
+        if (!answered) {
+          if (["1", "2", "3", "4"].includes(e.key)) {
+            const idx = parseInt(e.key) - 1;
+            const buttons = document.querySelectorAll(".quiz-opt-btn");
+            if (buttons[idx]) selectOption(idx);
+          }
+        } else if (e.key === "Enter") {
+          document.getElementById("btn-next-question").click();
+        }
+      }
+    });
+
+    document.getElementById("btn-next-question").onclick = () => {
+      if (window.playGQSound) window.playGQSound("cmd");
+      currentQ++;
+      if (currentQ < QUESTIONS.length) {
+        loadQuestion(currentQ);
+      } else {
+        showResults();
+      }
+    };
+
+    function showResults() {
+      document.getElementById("quiz-runner-stage").style.display = "none";
+      const resultStage = document.getElementById("quiz-result-stage");
+      const summaryCard = document.getElementById("result-summary-card");
+      const certZone = document.getElementById("certificate-render-zone");
+      resultStage.style.display = "block";
+
+      const pct = Math.round((score / QUESTIONS.length) * 100);
+      const passed = score >= 12; // 80% passing grade
+
+      if (passed) {
+        if (window.playGQSound) window.playGQSound("win");
+        summaryCard.innerHTML = `
+          <div style="text-align:center">
+            <div style="font-size:42px;margin-bottom:8px">🎉 🏆 🎓</div>
+            <h2 style="font-size:32px;font-weight:800;margin:0 0 8px;color:#15803d">
+              Congratulations! You Passed!
+            </h2>
+            <p style="font-size:16px;color:var(--mut);max-width:540px;margin:0 auto 16px">
+              You scored <strong>${score}/15 (${pct}%)</strong> on the Git Nerchuko Certification Examination.
+            </p>
+          </div>
+        `;
+
+        // Check if user is logged in
+        let user = window.GNAuth.getUser();
+        let recipientName = user ? (user.fullName || user.username) : "";
+
+        if (!recipientName) {
+          // Prompt user to enter their name for the certificate
+          const namePrompt = document.createElement("div");
+          namePrompt.style.cssText = "max-width:480px;margin:20px auto;background:rgba(234,179,8,0.12);border:1.5px solid #eab308;padding:18px;border-radius:14px;text-align:center";
+          namePrompt.innerHTML = `
+            <strong style="color:#b45309;display:block;margin-bottom:6px">Engrave Your Certificate:</strong>
+            <p style="font-size:13px;margin:0 0 12px;color:var(--ink)">Please enter your full legal name to print on your verified credential:</p>
+            <div style="display:flex;gap:8px">
+              <input id="prompt-cert-name" placeholder="Your Full Name" style="flex:1;background:var(--pn);border:1px solid var(--ln);padding:10px 14px;border-radius:8px;font:inherit">
+              <button class="btn-3d" id="btn-bind-name" style="padding:10px 18px;font-size:14px">Generate</button>
+            </div>
+          `;
+          summaryCard.appendChild(namePrompt);
+
+          document.getElementById("btn-bind-name").onclick = () => {
+            const val = document.getElementById("prompt-cert-name").value.trim();
+            if (val) {
+              recipientName = val;
+              renderOfficialCertificate(recipientName, score, pct);
+              namePrompt.style.display = "none";
+            }
+          };
+        } else {
+          renderOfficialCertificate(recipientName, score, pct);
+        }
+      } else {
+        if (window.playGQSound) window.playGQSound("error");
+        summaryCard.innerHTML = `
+          <div style="text-align:center;padding:20px">
+            <div style="font-size:38px;margin-bottom:8px">📚 💡</div>
+            <h2 style="font-size:28px;font-weight:800;margin:0 0 8px;color:#b91c1c">
+              Keep Practicing! Score: ${score}/15 (${pct}%)
+            </h2>
+            <p style="font-size:15px;color:var(--mut);max-width:520px;margin:0 auto 20px">
+              Passing threshold is <strong>80% (12/15)</strong>. Review branching, fast-forwards, interactive rebasing, and reflog in the playground, then retake the exam to earn your Certificate!
+            </p>
+            <div style="display:flex;justify-content:center;gap:12px">
+              <button class="btn-3d" onclick="restartQuiz()" style="padding:12px 24px">🔁 Retake Exam</button>
+              <a class="btn outline" href="play.html" style="border-radius:12px;padding:12px 20px;font-weight:700;text-decoration:none">Back to Playground</a>
+            </div>
+          </div>
+        `;
+        certZone.style.display = "none";
+      }
+    }
+
+    function renderOfficialCertificate(fullName, sc, pct) {
+      const certZone = document.getElementById("certificate-render-zone");
+      const nameEl = document.getElementById("cert-recipient-name");
+      const scorePill = document.getElementById("cert-score-pill");
+      const idTag = document.getElementById("cert-id-tag");
+      const dateTag = document.getElementById("cert-date-tag");
+
+      const randomId = "GN-2026-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+      const today = new Date().toISOString().split("T")[0];
+
+      nameEl.textContent = fullName;
+      scorePill.textContent = `Score: ${sc}/15 (${pct}%)`;
+      idTag.textContent = randomId;
+      dateTag.textContent = today;
+
+      // Save to user profile in GNAuth
+      window.GNAuth.saveCertificate({
+        certId: randomId,
+        fullName: fullName,
+        score: sc,
+        pct: pct,
+        date: today
+      });
+
+      certZone.style.display = "block";
+      certZone.scrollIntoView({ behavior: "smooth" });
+    }
+
+    function restartQuiz() {
+      document.getElementById("quiz-result-stage").style.display = "none";
+      document.getElementById("quiz-intro-stage").style.display = "block";
+    }
+
+    function copyCertLink() {
+      const id = document.getElementById("cert-id-tag").textContent;
+      navigator.clipboard.writeText(location.origin + "/quiz.html?cert=" + id).then(() => {
+        alert("Certificate verification link copied to clipboard!");
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign In / Register – Git Nerchuko</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="sound.js"></script>
+  <script src="shared.js"></script>
+  <script src="auth.js"></script>
+</head>
+<body>
+  <nav>
+    <a class="logo" href="index.html">git<b>nerchuko</b></a>
+    <a href="play.html">Playground</a>
+    <a href="arcade.html">Arcade</a>
+    <a href="quiz.html">🎓 Exam &amp; Certificate</a>
+    <a href="install.html">Install Git</a>
+    <a href="faq.html">FAQ</a>
+    <a href="leaderboard.html">Leaderboard</a>
+    <a href="shop.html">Shop</a>
+  </nav>
+
+  <main style="max-width:540px;margin:40px auto;padding:0 20px">
+    <div class="auth-modal-card tilt-card" style="margin:0 auto">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;position:relative;z-index:2">
+        <div class="auth-badge-pill">
+          <span>🔐</span> OFFICIAL AUTHENTICATOR
+        </div>
+      </div>
+
+      <div style="position:relative;z-index:2">
+        <h1 id="page-auth-title" style="font-size:26px;font-weight:800;letter-spacing:-0.02em;margin:0 0 6px;color:#fff">
+          Sign In to <span style="color:#ff8a3d">Git Nerchuko</span>
+        </h1>
+        <p id="page-auth-subtitle" style="color:#94a3b8;font-size:13.5px;margin:0 0 20px">
+          Access your saved mission stars, XP balance, CRT themes, and verified Certificate.
+        </p>
+      </div>
+
+      <!-- Segmented Control Switcher -->
+      <div class="auth-segmented-switch" style="position:relative;z-index:2">
+        <button id="page-tab-login" class="auth-seg-btn active">
+          <span>🔑</span> Sign In
+        </button>
+        <button id="page-tab-reg" class="auth-seg-btn">
+          <span>✨</span> Create New Account
+        </button>
+      </div>
+
+      <!-- Upfront Certificate Warning -->
+      <div id="page-cert-warning" class="auth-cert-card" style="display:none;position:relative;z-index:2">
+        <div class="auth-cert-icon">🎓</div>
+        <div class="auth-cert-text">
+          <strong>Official Certificate Accreditation Notice:</strong><br>
+          Please provide your real <strong>Full Legal Name</strong> below. This exact name will be permanently engraved on your official <strong>Git Nerchuko Certification of Competence</strong> after passing the 15-question exam!
+        </div>
+      </div>
+
+      <div id="page-auth-error" style="display:none;background:rgba(239,68,68,0.15);border:1.5px solid #ef4444;color:#fca5a5;padding:10px 14px;border-radius:12px;font-size:13px;margin-bottom:16px;position:relative;z-index:2"></div>
+      <div id="page-auth-success" style="display:none;background:rgba(34,197,94,0.15);border:1.5px solid #22c55e;color:#86efac;padding:10px 14px;border-radius:12px;font-size:13.5px;margin-bottom:16px;position:relative;z-index:2"></div>
+
+      <form id="page-auth-form" onsubmit="return false" style="position:relative;z-index:2">
+        <!-- Full Name (Register mode) -->
+        <div id="page-field-fullname" class="auth-field-wrap" style="display:none">
+          <div class="auth-field-label">
+            <span>Full Legal Name</span>
+            <span class="req">★ Will appear on Certificate</span>
+          </div>
+          <div class="auth-input-container">
+            <span class="auth-input-icon">👤</span>
+            <input id="page-input-fullname" class="auth-input-el" type="text" placeholder="e.g. Kalaonda Akshay" autocomplete="name">
+          </div>
+        </div>
+
+        <!-- Username / Identifier -->
+        <div class="auth-field-wrap">
+          <div class="auth-field-label">
+            <span id="page-label-ident">Username or Email</span>
+          </div>
+          <div class="auth-input-container">
+            <span class="auth-input-icon">⚡</span>
+            <input id="page-input-ident" class="auth-input-el" type="text" placeholder="your_username" autocomplete="username">
+          </div>
+        </div>
+
+        <!-- Email (Register mode) -->
+        <div id="page-field-email" class="auth-field-wrap" style="display:none">
+          <div class="auth-field-label">
+            <span>Email Address</span>
+          </div>
+          <div class="auth-input-container">
+            <span class="auth-input-icon">✉️</span>
+            <input id="page-input-email" class="auth-input-el" type="email" placeholder="you@example.com" autocomplete="email">
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="auth-field-wrap" style="margin-bottom:20px">
+          <div class="auth-field-label">
+            <span>Password</span>
+          </div>
+          <div class="auth-input-container">
+            <span class="auth-input-icon">🔒</span>
+            <input id="page-input-pass" class="auth-input-el" type="password" placeholder="••••••••" autocomplete="current-password">
+          </div>
+        </div>
+
+        <button id="page-btn-submit" class="auth-submit-btn">
+          <span>Sign In</span> 🚀
+        </button>
+
+        <div style="margin-top:16px;text-align:center;font-size:11.5px;color:#71789c;display:flex;align-items:center;justify-content:center;gap:6px">
+          <span class="pulse-dot"></span>
+          <span>Client-side persistent encryption · 100% Privacy</span>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer style="max-width:960px;margin:40px auto 20px;padding:24px 16px;border-top:1px solid var(--ln);color:var(--mut);font-size:13px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <div><b>gitnerchuko</b> © 2026 Kalaonda Akshay. All rights reserved.</div>
+    <div style="display:flex;gap:14px;font-weight:600">
+      <a href="quiz.html" style="color:inherit;text-decoration:none">Certification Exam</a>
+      <a href="play.html" style="color:inherit;text-decoration:none">Playground</a>
+      <a href="faq.html" style="color:inherit;text-decoration:none">FAQ</a>
+    </div>
+  </footer>
+
+  <script>
+    let isReg = false;
+
+    function setPageMode(reg) {
+      isReg = reg;
+      const title = document.getElementById("page-auth-title");
+      const warning = document.getElementById("page-cert-warning");
+      const fieldFull = document.getElementById("page-field-fullname");
+      const fieldEmail = document.getElementById("page-field-email");
+      const labelIdent = document.getElementById("page-label-ident");
+      const btnSubmit = document.getElementById("page-btn-submit");
+      const tabLogin = document.getElementById("page-tab-login");
+      const tabReg = document.getElementById("page-tab-reg");
+      const err = document.getElementById("page-auth-error");
+      const succ = document.getElementById("page-auth-success");
+
+      err.style.display = "none";
+      succ.style.display = "none";
+
+      if (isReg) {
+        title.innerHTML = 'Create <span style="color:#ff8a3d">Git Nerchuko</span> Account';
+        warning.style.display = "flex";
+        fieldFull.style.display = "block";
+        fieldEmail.style.display = "block";
+        labelIdent.textContent = "Choose Username";
+        btnSubmit.innerHTML = '<span>Register &amp; Bind Certificate Name</span> 🎓';
+        btnSubmit.className = "auth-submit-btn green";
+        tabLogin.className = "auth-seg-btn";
+        tabReg.className = "auth-seg-btn active";
+      } else {
+        title.innerHTML = 'Sign In to <span style="color:#ff8a3d">Git Nerchuko</span>';
+        warning.style.display = "none";
+        fieldFull.style.display = "none";
+        fieldEmail.style.display = "none";
+        labelIdent.textContent = "Username or Email";
+        btnSubmit.innerHTML = '<span>Sign In</span> 🚀';
+        btnSubmit.className = "auth-submit-btn";
+        tabLogin.className = "auth-seg-btn active";
+        tabReg.className = "auth-seg-btn";
+      }
+    }
+
+    document.getElementById("page-tab-login").onclick = () => setPageMode(false);
+    document.getElementById("page-tab-reg").onclick = () => setPageMode(true);
+
+    document.getElementById("page-btn-submit").onclick = () => {
+      const err = document.getElementById("page-auth-error");
+      const succ = document.getElementById("page-auth-success");
+      err.style.display = "none";
+      succ.style.display = "none";
+
+      if (isReg) {
+        const fullName = document.getElementById("page-input-fullname").value;
+        const username = document.getElementById("page-input-ident").value;
+        const email = document.getElementById("page-input-email").value;
+        const pass = document.getElementById("page-input-pass").value;
+
+        const res = window.GNAuth.register(fullName, username, email, pass);
+        if (res.success) {
+          if (window.playGQSound) window.playGQSound("win");
+          succ.innerHTML = `<strong>Account created successfully!</strong> Welcome, ${res.user.fullName}. Redirecting...`;
+          succ.style.display = "block";
+          setTimeout(() => {
+            const redirect = new URLSearchParams(location.search).get("redirect") || "quiz.html";
+            location.href = redirect;
+          }, 1200);
+        } else {
+          if (window.playGQSound) window.playGQSound("error");
+          err.textContent = res.message;
+          err.style.display = "block";
+        }
+      } else {
+        const ident = document.getElementById("page-input-ident").value;
+        const pass = document.getElementById("page-input-pass").value;
+
+        const res = window.GNAuth.login(ident, pass);
+        if (res.success) {
+          if (window.playGQSound) window.playGQSound("success");
+          succ.innerHTML = `<strong>Signed in successfully!</strong> Welcome back, ${res.user.fullName}. Redirecting...`;
+          succ.style.display = "block";
+          setTimeout(() => {
+            const redirect = new URLSearchParams(location.search).get("redirect") || "quiz.html";
+            location.href = redirect;
+          }, 1000);
+        } else {
+          if (window.playGQSound) window.playGQSound("error");
+          err.textContent = res.message;
+          err.style.display = "block";
+        }
+      }
+    };
+
+    // If already logged in, show status
+    if (window.GNAuth.isAuthenticated()) {
+      const u = window.GNAuth.getUser();
+      document.getElementById("page-auth-success").innerHTML = `You are currently logged in as <strong>${u.fullName}</strong> (@${u.username}). <a href="quiz.html" style="color:inherit;text-decoration:underline">Take Certification Exam</a> or <a href="javascript:window.GNAuth.logout()" style="color:inherit;text-decoration:underline">Sign Out</a>.`;
+      document.getElementById("page-auth-success").style.display = "block";
+    }
+  </script>
+</body>
+</html>
