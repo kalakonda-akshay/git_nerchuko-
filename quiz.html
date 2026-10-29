@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Git &amp; GitHub Master Certification Exam – Git Nerchuko</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;800;900&family=MedievalSharp&family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="qrcode.min.js"></script>
   <script src="sound.js"></script>
@@ -44,138 +47,215 @@
       }
     }
 
+    /* WARM PARCHMENT VINTAGE CERTIFICATE (DESIGN #6) */
     .cert-container-wrap {
-      max-width: 980px;
+      max-width: 1040px;
       margin: 0 auto;
     }
 
     .cert-frame {
-      background: radial-gradient(circle at 50% 35%, #ffffff 0%, #fffdfa 45%, #fbf6ec 100%);
-      color: #1a1714;
-      border: 14px solid #b45309;
-      outline: 3.5px solid #fef3c7;
-      outline-offset: -7px;
-      border-radius: 18px;
-      padding: 44px 48px 36px;
+      /* Aged warm ivory parchment with burnt edge vignette */
+      background:
+        radial-gradient(ellipse at 50% 45%, #fffbf2 0%, #faefd6 45%, #f2deaf 78%, #dfc38a 92%, #a87948 100%);
+      color: #23120b;
+      /* Triple vintage ornate woodcut / baroque border */
+      border: 14px solid #3d2110;
+      outline: 4px solid #8c5226;
+      outline-offset: -8px;
+      border-radius: 12px;
+      padding: 48px 54px 38px;
       position: relative;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.45), 0 0 50px rgba(180,83,9,0.22);
-      font-family: "Bricolage Grotesque", system-ui, sans-serif;
+      box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.6),
+        inset 0 0 60px rgba(80, 42, 18, 0.35),
+        inset 0 0 140px rgba(45, 20, 8, 0.25);
+      font-family: "Playfair Display", "Cinzel", Georgia, serif;
       overflow: hidden;
     }
 
-    /* Outer Ornamental Border Inset */
+    /* Distressed / Antiqued edge vignette */
     .cert-frame::before {
       content: "";
       position: absolute;
       inset: 12px;
-      border: 1.5px solid rgba(180, 83, 9, 0.45);
-      border-radius: 10px;
+      border: 2px solid #5a3017;
+      border-radius: 6px;
       pointer-events: none;
       z-index: 1;
     }
 
-    /* Inner Hairline Frame */
+    /* Inner ornate hairline */
     .cert-frame::after {
       content: "";
       position: absolute;
-      inset: 16px;
-      border: 1px dashed rgba(217, 119, 6, 0.35);
-      border-radius: 8px;
+      inset: 18px;
+      border: 1px dashed rgba(120, 68, 33, 0.45);
+      border-radius: 4px;
       pointer-events: none;
       z-index: 1;
     }
 
-    /* Corner Rosettes */
-    .cert-corner {
+    /* Corner Baroque Acanthus Leaf Flourishes */
+    .cert-corner-art {
       position: absolute;
-      width: 24px;
-      height: 24px;
-      color: #b45309;
-      font-size: 18px;
-      line-height: 1;
-      display: grid;
-      place-items: center;
-      z-index: 3;
-      user-select: none;
+      width: 72px;
+      height: 72px;
+      color: #5c3218;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.85;
     }
-    .cert-corner.tl { top: 18px; left: 18px; }
-    .cert-corner.tr { top: 18px; right: 18px; }
-    .cert-corner.bl { bottom: 18px; left: 18px; }
-    .cert-corner.br { bottom: 18px; right: 18px; }
+    .cert-corner-art.tl { top: 20px; left: 20px; }
+    .cert-corner-art.tr { top: 20px; right: 20px; transform: scaleX(-1); }
+    .cert-corner-art.bl { bottom: 20px; left: 20px; transform: scaleY(-1); }
+    .cert-corner-art.br { bottom: 20px; right: 20px; transform: scale(-1); }
 
-    /* Faint Git DAG Graph Watermark */
+    /* Vintage Center Watermark: Crossed Quills + Git DAG Graph */
     .cert-watermark {
       position: absolute;
       inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      opacity: 0.045;
+      opacity: 0.06;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* 3D Gold Ribbon Seal */
-    .cert-seal-wrap {
+    /* Typography Classes matching Design #6 */
+    .vintage-top-title {
+      font-family: 'MedievalSharp', 'Cinzel Decorative', 'Cinzel', Georgia, serif;
+      font-size: clamp(26px, 3.8vw, 36px);
+      font-weight: 700;
+      color: #261309;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+    .vintage-main-title {
+      font-family: 'MedievalSharp', 'Cinzel Decorative', 'Cinzel', Georgia, serif;
+      font-size: clamp(34px, 5vw, 52px);
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      margin: 0;
+      line-height: 1.15;
+      text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+    }
+    .vintage-main-title .copper {
+      color: #8b471d;
+    }
+    .vintage-main-title .charcoal {
+      color: #1a0d06;
+    }
+    .vintage-preamble {
+      font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+      font-size: 15px;
+      font-style: italic;
+      letter-spacing: 0.14em;
+      color: #633c1f;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+    .vintage-name {
+      font-family: 'Cinzel Decorative', 'MedievalSharp', 'Playfair Display', Georgia, serif;
+      font-size: clamp(32px, 5vw, 46px);
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      color: #1c0e07;
+      text-transform: uppercase;
+      display: inline-block;
+      padding: 0 32px 4px;
+      border-bottom: 2.5px solid #844c23;
+      text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+    }
+    .vintage-desc {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: #3b2214;
+      max-width: 760px;
+      margin: 14px auto 0;
+    }
+
+    /* Vintage Score Pills */
+    .vintage-pill {
+      background: rgba(139, 75, 33, 0.08);
+      border: 1.5px solid #8c5226;
+      color: #4a2712;
+      padding: 5px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.03em;
+      box-shadow: inset 0 1px 3px rgba(255,255,255,0.4);
+    }
+    .vintage-pill.distinction {
+      background: rgba(22, 101, 52, 0.1);
+      border-color: #15803d;
+      color: #14532d;
+    }
+
+    /* Vintage Embossed Wax / Bronze Seal */
+    .vintage-seal-wrap {
       position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-    .cert-seal {
+    .vintage-seal {
       width: 96px;
       height: 96px;
       border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #fef08a 0%, #f59e0b 35%, #b45309 75%, #78350f 100%);
-      color: #fff;
+      background: radial-gradient(circle at 35% 30%, #c4773c 0%, #8c4b1f 50%, #4e230b 90%, #2b1104 100%);
+      color: #faefd6;
       display: grid;
       place-items: center;
       text-align: center;
-      font-size: 9.5px;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      box-shadow: 0 10px 25px rgba(180, 83, 9, 0.45), inset 0 2px 4px rgba(255,255,255,0.7), inset 0 -3px 6px rgba(0,0,0,0.4);
-      border: 3.5px solid #fef3c7;
+      font-size: 8.5px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      box-shadow:
+        0 8px 24px rgba(60, 28, 10, 0.55),
+        inset 0 2px 4px rgba(255, 230, 180, 0.6),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.5);
+      border: 3.5px double #e8c697;
       text-transform: uppercase;
       line-height: 1.25;
+      font-family: 'Cinzel', serif;
       position: relative;
       z-index: 3;
     }
-    .cert-ribbon-tails {
+    .vintage-ribbon-tails {
       position: absolute;
       top: 76px;
       display: flex;
       gap: 8px;
       z-index: 2;
     }
-    .cert-ribbon-left, .cert-ribbon-right {
+    .vintage-ribbon-left, .vintage-ribbon-right {
       width: 22px;
-      height: 36px;
-      background: linear-gradient(180deg, #b45309 0%, #78350f 100%);
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      height: 38px;
+      background: linear-gradient(180deg, #783b16 0%, #461f0a 100%);
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.35);
     }
-    .cert-ribbon-left {
-      transform: rotate(14deg);
-    }
-    .cert-ribbon-right {
-      transform: rotate(-14deg);
-    }
+    .vintage-ribbon-left { transform: rotate(14deg); }
+    .vintage-ribbon-right { transform: rotate(-14deg); }
 
-    /* QR Code Box */
-    .cert-qr-container {
-      background: #ffffff;
+    /* Vintage QR Container */
+    .vintage-qr-box {
+      background: #fffdf7;
       padding: 6px;
-      border-radius: 10px;
-      border: 1.5px solid #d97706;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border: 1.5px solid #8c5226;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(50, 25, 10, 0.15);
       display: inline-block;
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.15s ease;
     }
-    .cert-qr-container:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 18px rgba(217,119,6,0.3);
+    .vintage-qr-box:hover {
+      transform: scale(1.04);
     }
 
     /* Option button styling */
@@ -339,126 +419,150 @@
       <!-- Success Banner / Grade Summary -->
       <div id="result-summary-card" class="card" style="padding:28px;border-radius:20px;background:var(--pn);margin-bottom:28px"></div>
 
-      <!-- Printable Certificate Zone -->
+      <!-- Printable Certificate Zone: WARM PARCHMENT VINTAGE (DESIGN #6) -->
       <div id="certificate-render-zone" style="display:none">
         <div class="cert-container-wrap">
           <div class="cert-frame">
-            <!-- Corner Rosettes -->
-            <div class="cert-corner tl">❖</div>
-            <div class="cert-corner tr">❖</div>
-            <div class="cert-corner bl">❖</div>
-            <div class="cert-corner br">❖</div>
+            <!-- Corner Baroque Acanthus Leaf Flourishes -->
+            <svg class="cert-corner-art tl" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <path d="M12 12 C 34 12, 54 18, 70 34 C 54 40, 40 54, 34 70 C 18 54, 12 34, 12 12 Z" fill="#5c3218" opacity="0.35"/>
+              <path d="M16 16 Q 48 22 64 48 Q 48 44 32 64 Q 26 44 16 16" stroke-width="2.5"/>
+              <circle cx="16" cy="16" r="4.5" fill="currentColor"/>
+              <path d="M16 16 L 90 16 M 16 16 L 16 90" stroke-width="3"/>
+              <circle cx="55" cy="16" r="3.5" fill="currentColor"/>
+              <circle cx="16" cy="55" r="3.5" fill="currentColor"/>
+              <path d="M26 26 C 46 26, 68 36, 78 58" stroke-dasharray="3,3" stroke-width="1.5"/>
+            </svg>
+            <svg class="cert-corner-art tr" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <path d="M12 12 C 34 12, 54 18, 70 34 C 54 40, 40 54, 34 70 C 18 54, 12 34, 12 12 Z" fill="#5c3218" opacity="0.35"/>
+              <path d="M16 16 Q 48 22 64 48 Q 48 44 32 64 Q 26 44 16 16" stroke-width="2.5"/>
+              <circle cx="16" cy="16" r="4.5" fill="currentColor"/>
+              <path d="M16 16 L 90 16 M 16 16 L 16 90" stroke-width="3"/>
+              <circle cx="55" cy="16" r="3.5" fill="currentColor"/>
+              <circle cx="16" cy="55" r="3.5" fill="currentColor"/>
+              <path d="M26 26 C 46 26, 68 36, 78 58" stroke-dasharray="3,3" stroke-width="1.5"/>
+            </svg>
+            <svg class="cert-corner-art bl" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <path d="M12 12 C 34 12, 54 18, 70 34 C 54 40, 40 54, 34 70 C 18 54, 12 34, 12 12 Z" fill="#5c3218" opacity="0.35"/>
+              <path d="M16 16 Q 48 22 64 48 Q 48 44 32 64 Q 26 44 16 16" stroke-width="2.5"/>
+              <circle cx="16" cy="16" r="4.5" fill="currentColor"/>
+              <path d="M16 16 L 90 16 M 16 16 L 16 90" stroke-width="3"/>
+              <circle cx="55" cy="16" r="3.5" fill="currentColor"/>
+              <circle cx="16" cy="55" r="3.5" fill="currentColor"/>
+              <path d="M26 26 C 46 26, 68 36, 78 58" stroke-dasharray="3,3" stroke-width="1.5"/>
+            </svg>
+            <svg class="cert-corner-art br" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <path d="M12 12 C 34 12, 54 18, 70 34 C 54 40, 40 54, 34 70 C 18 54, 12 34, 12 12 Z" fill="#5c3218" opacity="0.35"/>
+              <path d="M16 16 Q 48 22 64 48 Q 48 44 32 64 Q 26 44 16 16" stroke-width="2.5"/>
+              <circle cx="16" cy="16" r="4.5" fill="currentColor"/>
+              <path d="M16 16 L 90 16 M 16 16 L 16 90" stroke-width="3"/>
+              <circle cx="55" cy="16" r="3.5" fill="currentColor"/>
+              <circle cx="16" cy="55" r="3.5" fill="currentColor"/>
+              <path d="M26 26 C 46 26, 68 36, 78 58" stroke-dasharray="3,3" stroke-width="1.5"/>
+            </svg>
 
-            <!-- Faint SVG Watermark of Git DAG -->
+            <!-- Vintage Center Watermark: Crossed Quills + Git DAG Graph -->
             <div class="cert-watermark">
-              <svg width="680" height="340" viewBox="0 0 680 340" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M 40 170 H 640" stroke="#b45309" stroke-width="4" stroke-dasharray="8 6"/>
-                <path d="M 120 170 C 180 170, 180 70, 240 70 H 380 C 440 70, 440 170, 500 170" stroke="#b45309" stroke-width="4"/>
-                <path d="M 200 170 C 260 170, 260 270, 320 270 H 420 C 480 270, 480 170, 540 170" stroke="#b45309" stroke-width="4"/>
-                <circle cx="50" cy="170" r="14" fill="#b45309"/>
-                <circle cx="120" cy="170" r="14" fill="#b45309"/>
-                <circle cx="200" cy="170" r="14" fill="#b45309"/>
-                <circle cx="240" cy="70" r="14" fill="#b45309"/>
-                <circle cx="380" cy="70" r="14" fill="#b45309"/>
-                <circle cx="320" cy="270" r="14" fill="#b45309"/>
-                <circle cx="420" cy="270" r="14" fill="#b45309"/>
-                <circle cx="500" cy="170" r="14" fill="#b45309"/>
-                <circle cx="540" cy="170" r="14" fill="#b45309"/>
-                <circle cx="630" cy="170" r="14" fill="#b45309"/>
+              <svg width="740" height="380" viewBox="0 0 740 380" fill="none" stroke="#683918" xmlns="http://www.w3.org/2000/svg">
+                <!-- Git Branch Tree -->
+                <path d="M 50 190 H 690" stroke-width="4" stroke-dasharray="8 6"/>
+                <path d="M 150 190 C 210 190, 210 80, 280 80 H 450 C 520 80, 520 190, 590 190" stroke-width="4"/>
+                <path d="M 230 190 C 300 190, 300 300, 370 300 H 480 C 550 300, 550 190, 620 190" stroke-width="4"/>
+                <circle cx="80" cy="190" r="16" fill="#683918"/>
+                <circle cx="150" cy="190" r="16" fill="#683918"/>
+                <circle cx="280" cy="80" r="16" fill="#683918"/>
+                <circle cx="450" cy="80" r="16" fill="#683918"/>
+                <circle cx="370" cy="300" r="16" fill="#683918"/>
+                <circle cx="480" cy="300" r="16" fill="#683918"/>
+                <circle cx="590" cy="190" r="16" fill="#683918"/>
+                <circle cx="660" cy="190" r="16" fill="#683918"/>
+                <!-- Crossed Antique Quill Pens -->
+                <g transform="translate(370, 190)">
+                  <path d="M -130 110 Q -40 25 90 -95 C 75 -65 55 -35 25 -15 Q -55 45 -130 110 Z" fill="#683918" opacity="0.35"/>
+                  <path d="M -130 110 L 90 -95" stroke-width="3"/>
+                  <path d="M 130 110 Q 40 25 -90 -95 C -75 -65 -55 -35 -25 -15 Q 55 45 130 110 Z" fill="#683918" opacity="0.35"/>
+                  <path d="M 130 110 L -90 -95" stroke-width="3"/>
+                </g>
               </svg>
             </div>
 
-            <!-- Header Section -->
-            <div style="position:relative;z-index:2;text-align:center;margin-bottom:18px">
-              <div style="font-size:11.5px;font-weight:800;letter-spacing:0.22em;color:#b45309;text-transform:uppercase;margin-bottom:6px">
-                ★ OFFICIAL ACCREDITATION OF TECHNICAL COMPETENCE ★
-              </div>
-              <h1 style="font-size:clamp(26px, 3.8vw, 36px);font-weight:900;letter-spacing:-0.02em;margin:0 0 4px;color:#1a1714;text-transform:uppercase">
-                Certificate of Git &amp; GitHub Mastery
+            <!-- Top Header Section (Gothic Vintage Blackletter) -->
+            <div style="position:relative;z-index:2;text-align:center;margin-bottom:12px">
+              <div class="vintage-top-title">Certificate of</div>
+              <h1 class="vintage-main-title">
+                <span class="copper">Git &amp; GitHub</span> <span class="charcoal">Mastery</span>
               </h1>
-              <div style="font-size:13.5px;color:#78350f;font-style:italic;letter-spacing:0.02em">
-                Issued under the supreme authority of Git Nerchuko Version Control Engineering
+              <div class="vintage-preamble">
+                Be it known to all that
               </div>
             </div>
 
-            <!-- Recipient Showcase -->
-            <div style="position:relative;z-index:2;text-align:center;margin:22px 0 18px">
-              <div style="font-size:12.5px;color:#6b7280;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;font-weight:600">
-                This is to officially certify that
+            <!-- Recipient Name Showcase -->
+            <div style="position:relative;z-index:2;text-align:center;margin:16px 0 14px">
+              <div id="cert-recipient-name" class="vintage-name">
+                KALAKONDA AKSHAY
               </div>
-              <div id="cert-recipient-name" style="font-size:clamp(30px, 4.8vw, 44px);font-weight:900;letter-spacing:-0.01em;color:#1e1b18;text-transform:uppercase;border-bottom:2.5px solid #d97706;display:inline-block;padding:0 28px 4px">
-                Kalaonda Akshay
-              </div>
-              <p style="max-width:760px;margin:16px auto 0;color:#374151;font-size:14px;line-height:1.65">
-                has successfully achieved verified technical distinction across foundational, workflow, and advanced Git architectural principles, passing the comprehensive <strong>15-Question Technical Examination</strong> covering atomic commit trees, fast-forward branch joins, interactive history rebasing, reflog disaster recovery, and 3-way conflict resolution.
+              <p class="vintage-desc">
+                Has demonstrated scholarly expertise and practical rigor in the disciplines of <strong>Git Version Control</strong>, <strong>Branching Systems</strong>, and <strong>Collaborative Craftsmanship</strong>, successfully achieving technical distinction on the comprehensive 15-Question Technical Examination.
               </p>
             </div>
 
             <!-- Score Breakdown Badges on Certificate -->
-            <div style="position:relative;z-index:2;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:24px">
-              <div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:5px 12px;border-radius:99px;font-size:12px;font-weight:700">
-                🌱 5/5 Foundations Passed
-              </div>
-              <div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:5px 12px;border-radius:99px;font-size:12px;font-weight:700">
-                ⚡ 5/5 Workflows Passed
-              </div>
-              <div style="background:#fef3c7;border:1px solid #fde68a;color:#92400e;padding:5px 12px;border-radius:99px;font-size:12px;font-weight:700">
-                🚀 5/5 Architecture Passed
-              </div>
-              <div id="cert-score-pill" style="background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;padding:5px 14px;border-radius:99px;font-size:12px;font-weight:800">
-                Score: 100% · Distinction
-              </div>
+            <div style="position:relative;z-index:2;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+              <div class="vintage-pill">🌱 5/5 Foundations Passed</div>
+              <div class="vintage-pill">⚡ 5/5 Workflows Passed</div>
+              <div class="vintage-pill">🚀 5/5 Architecture Passed</div>
+              <div id="cert-score-pill" class="vintage-pill distinction">🏆 Score: 100% · Distinction</div>
             </div>
 
-            <!-- Bottom Three-Column Verification & Seal Row -->
-            <div style="position:relative;z-index:2;display:grid;grid-template-columns:1.3fr 1fr 1.3fr;align-items:end;margin-top:14px;padding-top:16px;border-top:1.5px dashed rgba(180,83,9,0.35);gap:16px">
-              <!-- Left: Real Dynamic QR Code & ID -->
+            <!-- Bottom Three-Column Verification & Signature Row -->
+            <div style="position:relative;z-index:2;display:grid;grid-template-columns:1.35fr 1fr 1.35fr;align-items:end;margin-top:12px;padding-top:16px;border-top:1.5px dashed rgba(110,55,20,0.35);gap:16px">
+              <!-- Left: Dynamic QR Code & ID Tag -->
               <div style="display:flex;align-items:center;gap:12px">
                 <a id="cert-qr-link" href="verify.html?id=GN-2026-PENNZS" target="_blank" title="Click to verify credential online" style="text-decoration:none;flex-shrink:0">
-                  <div id="cert-qr-box" class="cert-qr-container"></div>
+                  <div id="cert-qr-box" class="vintage-qr-box"></div>
                 </a>
-                <div style="font-size:12px;line-height:1.45">
-                  <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#92400e;font-weight:800;margin-bottom:2px">
+                <div style="font-size:12px;line-height:1.45;color:#3b2214">
+                  <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.09em;color:#8c4b1f;font-weight:800;font-family:'Cinzel',serif;margin-bottom:2px">
                     Scan / Click to Verify
                   </div>
-                  <div style="font-family:'JetBrains Mono','Courier New',monospace;font-size:11.5px;color:#374151">
-                    ID: <strong id="cert-id-tag" style="color:#b45309">GN-2026-PENNZS</strong>
+                  <div style="font-family:'JetBrains Mono','Courier New',monospace;font-size:11.5px;color:#261208">
+                    ID: <strong id="cert-id-tag" style="color:#8c4b1f">GN-2026-PENNZS</strong>
                   </div>
-                  <div style="font-size:11.5px;color:#6b7280">
+                  <div style="font-size:11.5px;color:#5a381e">
                     ISSUED: <strong id="cert-date-tag">2026-10-29</strong>
                   </div>
                   <div style="margin-top:2px">
-                    <a id="cert-verify-link" href="verify.html?id=GN-2026-PENNZS" target="_blank" style="color:#b45309;font-weight:700;font-size:11px;text-decoration:underline">
+                    <a id="cert-verify-link" href="verify.html?id=GN-2026-PENNZS" target="_blank" style="color:#8c4b1f;font-weight:700;font-size:11px;text-decoration:underline">
                       Verify Credential Online ↗
                     </a>
                   </div>
                 </div>
               </div>
 
-              <!-- Center: 3D Embossed Gold Seal with Ribbon Tails -->
+              <!-- Center: Stamped Bronze / Wax Seal with Ribbon Tails -->
               <div style="display:flex;justify-content:center">
-                <div class="cert-seal-wrap">
-                  <div class="cert-seal">
-                    <span>GIT NERCHUKO<br>★ VERIFIED ★<br>MASTER</span>
+                <div class="vintage-seal-wrap">
+                  <div class="vintage-seal">
+                    <span>GIT NERCHUKO<br>★ SEAL OF ★<br>MASTERY</span>
                   </div>
-                  <div class="cert-ribbon-tails">
-                    <div class="cert-ribbon-left"></div>
-                    <div class="cert-ribbon-right"></div>
+                  <div class="vintage-ribbon-tails">
+                    <div class="vintage-ribbon-left"></div>
+                    <div class="vintage-ribbon-right"></div>
                   </div>
                 </div>
               </div>
 
-              <!-- Right: Formal Calligraphic Signature -->
+              <!-- Right: Formal Calligraphic Ink Signature -->
               <div style="text-align:right">
-                <div style="font-family:'Brush Script MT','Great Vibes',cursive,sans-serif;font-size:28px;color:#92400e;line-height:1;margin-bottom:2px">
-                  Kalaonda Akshay
+                <div style="font-family:'Alex Brush','Brush Script MT',cursive;font-size:36px;color:#261208;line-height:1;margin-bottom:2px">
+                  Kalaonda Akshay -
                 </div>
-                <div style="border-top:1.5px solid #1a1714;padding-top:4px;font-weight:800;font-size:13px;color:#1a1714">
-                  Kalaonda Akshay
+                <div style="border-top:1.5px solid #4a2813;padding-top:4px;font-weight:800;font-size:12.5px;color:#261208;font-family:'Cinzel',serif">
+                  Kalaonda Akshay - Founder &amp; Lead Systems Architect
                 </div>
-                <div style="font-size:11px;color:#6b7280;line-height:1.3">
-                  Founder &amp; Lead Systems Architect<br>
-                  <span style="font-size:10px;color:#9ca3af">Git Nerchuko Technical Directorate</span>
+                <div style="font-size:11px;color:#784523;font-style:italic">
+                  Git Nerchuko Technical Directorate
                 </div>
               </div>
             </div>
